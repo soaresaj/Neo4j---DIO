@@ -1,103 +1,103 @@
-user;user_name;type;title;genre;actor;director;rating
-1;MÙnica;movie;O Poderoso Chef„o;Drama;Marlon Brando;Francis Ford Coppola;2
-2;MÙnica;movie;O Poderoso Chef„o;Drama;Al Pacino;Francis Ford Coppola;4
-3;MÙnica;movie;O Poderoso Chef„o;Drama;Al Pacino;Francis Ford Coppola;4
-4;Antonio;movie;O Poderoso Chef„o;Drama;Marlon Brando;Francis Ford Coppola;5
-5;Antonio;movie;O Poderoso Chef„o;Drama;Al Pacino;Francis Ford Coppola;1
-6;Antonio;movie;O Poderoso Chef„o;Drama;Al Pacino;Francis Ford Coppola;2
-7;Antonio;movie;Pulp Fiction: Tempo de ViolÍncia;Crime;John Travolta;Quentin Tarantino;1
-8;Antonio;movie;Pulp Fiction: Tempo de ViolÍncia;Crime;Samuel L. Jackson;Quentin Tarantino;4
-9;Antonio;movie;Interestelar;FicÁ„o CientÌfica;Matthew McConaughey;Christopher Nolan;5
-10;Antonio;movie;Interestelar;FicÁ„o CientÌfica;Anne Hathaway;Christopher Nolan;5
-11;MÙnica;movie;Matrix;FicÁ„o CientÌfica;Keanu Reeves;Lana Wachowski;2
-12;MÙnica;movie;Matrix;FicÁ„o CientÌfica;Laurence Fishburne;Lana Wachowski;4
-13;Antonio;movie;Matrix;FicÁ„o CientÌfica;Keanu Reeves;Lana Wachowski;5
-14;Antonio;movie;Matrix;FicÁ„o CientÌfica;Laurence Fishburne;Lana Wachowski;3
-15;Beatrice;movie;Clube da Luta;Drama;Brad Pitt;David Fincher;2
-16;Beatrice;movie;Clube da Luta;Drama;Edward Norton;David Fincher;2
-17;MÙnica;movie;Seven: Os Sete Crimes Capitais;Crime;Brad Pitt;David Fincher;4
-18;MÙnica;movie;Seven: Os Sete Crimes Capitais;Crime;Morgan Freeman;David Fincher;2
-19;Antonio;movie;Bastardos InglÛrios;Guerra;Brad Pitt;Quentin Tarantino;3
-20;Antonio;movie;Bastardos InglÛrios;Guerra;Christoph Waltz;Quentin Tarantino;4
-21;Catarina;movie;Django Livre;Faroeste;Jamie Foxx;Quentin Tarantino;4
-22;Catarina;movie;Django Livre;Faroeste;Christoph Waltz;Quentin Tarantino;5
-23;Isadora;movie;Avatar;FicÁ„o CientÌfica;Sam Worthington;James Cameron;2
-24;Isadora;movie;Avatar;FicÁ„o CientÌfica;Zoe SaldaÒa;James Cameron;3
-25;Henrique;movie;Titanic;Romance;Leonardo DiCaprio;James Cameron;2
-26;Henrique;movie;Titanic;Romance;Kate Winslet;James Cameron;3
-27;MÙnica;movie;Titanic;Romance;Leonardo DiCaprio;James Cameron;4
-28;MÙnica;movie;Titanic;Romance;Kate Winslet;James Cameron;3
-29;Beatrice;movie;O Lobo de Wall Street;ComÈdia;Leonardo DiCaprio;Martin Scorsese;4
-30;Beatrice;movie;O Lobo de Wall Street;ComÈdia;Jonah Hill;Martin Scorsese;1
-31;MÙnica;movie;Os Infiltrados;Crime;Leonardo DiCaprio;Martin Scorsese;3
-32;MÙnica;movie;Os Infiltrados;Crime;Matt Damon;Martin Scorsese;4
-33;Antonio;movie;Os Infiltrados;Crime;Leonardo DiCaprio;Martin Scorsese;5
-34;Antonio;movie;Os Infiltrados;Crime;Matt Damon;Martin Scorsese;2
-35;MÙnica;movie;Coringa;Drama;Joaquin Phoenix;Todd Phillips;3
-36;Antonio;movie;Coringa;Drama;Joaquin Phoenix;Todd Phillips;2
-37;Catarina;movie;Parasita;Drama;Song Kang-ho;Bong Joon-ho;4
-38;Catarina;movie;Parasita;Drama;Choi Woo-shik;Bong Joon-ho;2
-39;Rafael;movie;1917;Guerra;George MacKay;Sam Mendes;3
-40;Rafael;movie;1917;Guerra;Dean-Charles Chapman;Sam Mendes;2
-41;F·tima;movie;La La Land;Romance;Ryan Gosling;Damien Chazelle;5
-42;F·tima;movie;La La Land;Romance;Emma Stone;Damien Chazelle;2
-43;Sofia;movie;Whiplash;Drama;Miles Teller;Damien Chazelle;3
-44;Sofia;movie;Whiplash;Drama;J.K. Simmons;Damien Chazelle;5
-45;Helena;serie;Breaking Bad;Drama;Bryan Cranston;Vince Gilligan;2
-46;Helena;serie;Breaking Bad;Drama;Aaron Paul;Vince Gilligan;3
-47;Antonio;serie;Game of Thrones;Fantasia;Emilia Clarke;David Benioff;2
-48;Antonio;serie;Game of Thrones;Fantasia;Kit Harington;David Benioff;3
-49;Isadora;serie;Stranger Things;FicÁ„o CientÌfica;Millie Bobby Brown;The Duffer Brothers;5
-50;Isadora;serie;Stranger Things;FicÁ„o CientÌfica;Finn Wolfhard;The Duffer Brothers;1
-51;Antonio;serie;Stranger Things;FicÁ„o CientÌfica;Millie Bobby Brown;The Duffer Brothers;3
-52;Antonio;serie;Stranger Things;FicÁ„o CientÌfica;Finn Wolfhard;The Duffer Brothers;3
-53;Henrique;serie;Stranger Things;FicÁ„o CientÌfica;Millie Bobby Brown;The Duffer Brothers;5
-54;Henrique;serie;Stranger Things;FicÁ„o CientÌfica;Finn Wolfhard;The Duffer Brothers;2
-55;Isadora;serie;The Crown;Drama;Claire Foy;Peter Morgan;1
-56;Isadora;serie;The Crown;Drama;Olivia Colman;Peter Morgan;5
-57;Antonio;serie;Mandalorian;FicÁ„o CientÌfica;Pedro Pascal;Jon Favreau;5
-58;Antonio;serie;Mandalorian;FicÁ„o CientÌfica;Carl Weathers;Jon Favreau;4
-59;MÙnica;serie;True Detective;Crime;Matthew McConaughey;Cary Fukunaga;1
-60;MÙnica;serie;True Detective;Crime;Woody Harrelson;Cary Fukunaga;3
-61;Isadora;serie;Big Little Lies;Drama;Reese Witherspoon;Jean-Marc VallÈe;3
-62;Isadora;serie;Big Little Lies;Drama;Nicole Kidman;Jean-Marc VallÈe;1
-63;Helena;movie;Argo;Drama;Ben Affleck;Ben Affleck;5
-64;Helena;movie;Argo;Drama;John Goodman;Ben Affleck;3
-65;Antonio;movie;Cidade de Deus;Crime;Alexandre Rodrigues;Fernando Meirelles;5
-66;Antonio;movie;Cidade de Deus;Crime;Leandro Firmino;Fernando Meirelles;2
-67;Sofia;movie;Onde os Fracos N„o TÍm Vez;Crime;Javier Bardem;Joel Coen;3
-68;Sofia;movie;Onde os Fracos N„o TÍm Vez;Crime;Josh Brolin;Joel Coen;4
-69;MÙnica;serie;Fargo;Crime;Martin Freeman;Noah Hawley;4
-70;MÙnica;serie;Fargo;Crime;Billy Bob Thornton;Noah Hawley;3
-71;Antonio;movie;O Regresso;Drama;Leonardo DiCaprio;Alejandro Gonz·lez IÒ·rritu;3
-72;Antonio;movie;O Regresso;Drama;Tom Hardy;Alejandro Gonz·lez IÒ·rritu;4
-73;Henrique;movie;Birdman;ComÈdia;Michael Keaton;Alejandro Gonz·lez IÒ·rritu;5
-74;Henrique;movie;Birdman;ComÈdia;Edward Norton;Alejandro Gonz·lez IÒ·rritu;5
-75;Jesus;serie;The Night Manager;Suspense;Tom Hiddleston;Susanne Bier;3
-76;Jesus;serie;The Night Manager;Suspense;Hugh Laurie;Susanne Bier;5
-77;MÙnica;serie;Chernobyl;Drama;Jared Harris;Johan Renck;5
-78;MÙnica;serie;Chernobyl;Drama;Stellan SkarsgÂrd;Johan Renck;2
-79;Isadora;movie;Drive;Suspense;Ryan Gosling;Nicolas Winding Refn;5
-80;Isadora;movie;Drive;Suspense;Carey Mulligan;Nicolas Winding Refn;4
-81;Antonio;movie;Blade Runner 2049;FicÁ„o CientÌfica;Ryan Gosling;Denis Villeneuve;1
-82;Antonio;movie;Blade Runner 2049;FicÁ„o CientÌfica;Harrison Ford;Denis Villeneuve;2
-83;Jesus;serie;Westworld;FicÁ„o CientÌfica;Evan Rachel Wood;Jonathan Nolan;3
-84;Jesus;serie;Westworld;FicÁ„o CientÌfica;Thandiwe Newton;Jonathan Nolan;3
-85;Henrique;movie;A Chegada;FicÁ„o CientÌfica;Amy Adams;Denis Villeneuve;5
-86;Henrique;movie;A Chegada;FicÁ„o CientÌfica;Jeremy Renner;Denis Villeneuve;4
-87;Antonio;movie;A Chegada;FicÁ„o CientÌfica;Amy Adams;Denis Villeneuve;1
-88;Antonio;movie;A Chegada;FicÁ„o CientÌfica;Jeremy Renner;Denis Villeneuve;4
-89;MÙnica;movie;Os Suspeitos;Suspense;Kevin Spacey;Bryan Singer;5
-90;MÙnica;movie;Os Suspeitos;Suspense;Gabriel Byrne;Bryan Singer;3
-91;Luzimar;movie;12 Homens e uma SentenÁa;Drama;Henry Fonda;Sidney Lumet;5
-92;Luzimar;movie;12 Homens e uma SentenÁa;Drama;Lee J. Cobb;Sidney Lumet;1
-93;Antonio;serie;Mindhunter;Crime;Jonathan Groff;David Fincher;2
-94;Antonio;serie;Mindhunter;Crime;Holt McCallany;David Fincher;5
-95;Antonio;serie;House of Cards;Drama;Kevin Spacey;David Fincher;4
-96;Antonio;serie;House of Cards;Drama;Robin Wright;David Fincher;1
-97;MÙnica;movie;Ilha do Medo;Suspense;Leonardo DiCaprio;Martin Scorsese;4
-98;MÙnica;movie;Ilha do Medo;Suspense;Mark Ruffalo;Martin Scorsese;3
-99;Antonio;movie;Ilha do Medo;Suspense;Leonardo DiCaprio;Martin Scorsese;4
-100;Antonio;movie;Ilha do Medo;Suspense;Mark Ruffalo;Martin Scorsese;3
-101;Paula;movie;Gangues de Nova York;Crime;Leonardo DiCaprio;Martin Scorsese;4
-102;Paula;movie;Gangues de Nova York;Crime;Daniel Day-Lewis;Martin Scorsese;1
+user,user_name,type,title,genre,actor,director,rating
+1,M√¥nica,movie,O Poderoso Chef√£o,Drama,Marlon Brando,Francis Ford Coppola,2
+2,M√¥nica,movie,O Poderoso Chef√£o,Drama,Al Pacino,Francis Ford Coppola,4
+3,M√¥nica,movie,O Poderoso Chef√£o,Drama,Al Pacino,Francis Ford Coppola,4
+4,Antonio,movie,O Poderoso Chef√£o,Drama,Marlon Brando,Francis Ford Coppola,5
+5,Antonio,movie,O Poderoso Chef√£o,Drama,Al Pacino,Francis Ford Coppola,1
+6,Antonio,movie,O Poderoso Chef√£o,Drama,Al Pacino,Francis Ford Coppola,2
+7,Antonio,movie,Pulp Fiction: Tempo de Viol√™ncia,Crime,John Travolta,Quentin Tarantino,1
+8,Antonio,movie,Pulp Fiction: Tempo de Viol√™ncia,Crime,Samuel L. Jackson,Quentin Tarantino,4
+9,Antonio,movie,Interestelar,Fic√ß√£o Cient√≠fica,Matthew McConaughey,Christopher Nolan,5
+10,Antonio,movie,Interestelar,Fic√ß√£o Cient√≠fica,Anne Hathaway,Christopher Nolan,5
+11,M√¥nica,movie,Matrix,Fic√ß√£o Cient√≠fica,Keanu Reeves,Lana Wachowski,2
+12,M√¥nica,movie,Matrix,Fic√ß√£o Cient√≠fica,Laurence Fishburne,Lana Wachowski,4
+13,Antonio,movie,Matrix,Fic√ß√£o Cient√≠fica,Keanu Reeves,Lana Wachowski,5
+14,Antonio,movie,Matrix,Fic√ß√£o Cient√≠fica,Laurence Fishburne,Lana Wachowski,3
+15,Beatrice,movie,Clube da Luta,Drama,Brad Pitt,David Fincher,2
+16,Beatrice,movie,Clube da Luta,Drama,Edward Norton,David Fincher,2
+17,M√¥nica,movie,Seven: Os Sete Crimes Capitais,Crime,Brad Pitt,David Fincher,4
+18,M√¥nica,movie,Seven: Os Sete Crimes Capitais,Crime,Morgan Freeman,David Fincher,2
+19,Antonio,movie,Bastardos Ingl√≥rios,Guerra,Brad Pitt,Quentin Tarantino,3
+20,Antonio,movie,Bastardos Ingl√≥rios,Guerra,Christoph Waltz,Quentin Tarantino,4
+21,Catarina,movie,Django Livre,Faroeste,Jamie Foxx,Quentin Tarantino,4
+22,Catarina,movie,Django Livre,Faroeste,Christoph Waltz,Quentin Tarantino,5
+23,Isadora,movie,Avatar,Fic√ß√£o Cient√≠fica,Sam Worthington,James Cameron,2
+24,Isadora,movie,Avatar,Fic√ß√£o Cient√≠fica,Zoe Salda√±a,James Cameron,3
+25,Henrique,movie,Titanic,Romance,Leonardo DiCaprio,James Cameron,2
+26,Henrique,movie,Titanic,Romance,Kate Winslet,James Cameron,3
+27,M√¥nica,movie,Titanic,Romance,Leonardo DiCaprio,James Cameron,4
+28,M√¥nica,movie,Titanic,Romance,Kate Winslet,James Cameron,3
+29,Beatrice,movie,O Lobo de Wall Street,Com√©dia,Leonardo DiCaprio,Martin Scorsese,4
+30,Beatrice,movie,O Lobo de Wall Street,Com√©dia,Jonah Hill,Martin Scorsese,1
+31,M√¥nica,movie,Os Infiltrados,Crime,Leonardo DiCaprio,Martin Scorsese,3
+32,M√¥nica,movie,Os Infiltrados,Crime,Matt Damon,Martin Scorsese,4
+33,Antonio,movie,Os Infiltrados,Crime,Leonardo DiCaprio,Martin Scorsese,5
+34,Antonio,movie,Os Infiltrados,Crime,Matt Damon,Martin Scorsese,2
+35,M√¥nica,movie,Coringa,Drama,Joaquin Phoenix,Todd Phillips,3
+36,Antonio,movie,Coringa,Drama,Joaquin Phoenix,Todd Phillips,2
+37,Catarina,movie,Parasita,Drama,Song Kang-ho,Bong Joon-ho,4
+38,Catarina,movie,Parasita,Drama,Choi Woo-shik,Bong Joon-ho,2
+39,Rafael,movie,1917,Guerra,George MacKay,Sam Mendes,3
+40,Rafael,movie,1917,Guerra,Dean-Charles Chapman,Sam Mendes,2
+41,F√°tima,movie,La La Land,Romance,Ryan Gosling,Damien Chazelle,5
+42,F√°tima,movie,La La Land,Romance,Emma Stone,Damien Chazelle,2
+43,Sofia,movie,Whiplash,Drama,Miles Teller,Damien Chazelle,3
+44,Sofia,movie,Whiplash,Drama,J.K. Simmons,Damien Chazelle,5
+45,Helena,serie,Breaking Bad,Drama,Bryan Cranston,Vince Gilligan,2
+46,Helena,serie,Breaking Bad,Drama,Aaron Paul,Vince Gilligan,3
+47,Antonio,serie,Game of Thrones,Fantasia,Emilia Clarke,David Benioff,2
+48,Antonio,serie,Game of Thrones,Fantasia,Kit Harington,David Benioff,3
+49,Isadora,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Millie Bobby Brown,The Duffer Brothers,5
+50,Isadora,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Finn Wolfhard,The Duffer Brothers,1
+51,Antonio,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Millie Bobby Brown,The Duffer Brothers,3
+52,Antonio,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Finn Wolfhard,The Duffer Brothers,3
+53,Henrique,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Millie Bobby Brown,The Duffer Brothers,5
+54,Henrique,serie,Stranger Things,Fic√ß√£o Cient√≠fica,Finn Wolfhard,The Duffer Brothers,2
+55,Isadora,serie,The Crown,Drama,Claire Foy,Peter Morgan,1
+56,Isadora,serie,The Crown,Drama,Olivia Colman,Peter Morgan,5
+57,Antonio,serie,Mandalorian,Fic√ß√£o Cient√≠fica,Pedro Pascal,Jon Favreau,5
+58,Antonio,serie,Mandalorian,Fic√ß√£o Cient√≠fica,Carl Weathers,Jon Favreau,4
+59,M√¥nica,serie,True Detective,Crime,Matthew McConaughey,Cary Fukunaga,1
+60,M√¥nica,serie,True Detective,Crime,Woody Harrelson,Cary Fukunaga,3
+61,Isadora,serie,Big Little Lies,Drama,Reese Witherspoon,Jean-Marc Vall√©e,3
+62,Isadora,serie,Big Little Lies,Drama,Nicole Kidman,Jean-Marc Vall√©e,1
+63,Helena,movie,Argo,Drama,Ben Affleck,Ben Affleck,5
+64,Helena,movie,Argo,Drama,John Goodman,Ben Affleck,3
+65,Antonio,movie,Cidade de Deus,Crime,Alexandre Rodrigues,Fernando Meirelles,5
+66,Antonio,movie,Cidade de Deus,Crime,Leandro Firmino,Fernando Meirelles,2
+67,Sofia,movie,Onde os Fracos N√£o T√™m Vez,Crime,Javier Bardem,Joel Coen,3
+68,Sofia,movie,Onde os Fracos N√£o T√™m Vez,Crime,Josh Brolin,Joel Coen,4
+69,M√¥nica,serie,Fargo,Crime,Martin Freeman,Noah Hawley,4
+70,M√¥nica,serie,Fargo,Crime,Billy Bob Thornton,Noah Hawley,3
+71,Antonio,movie,O Regresso,Drama,Leonardo DiCaprio,Alejandro Gonz√°lez I√±√°rritu,3
+72,Antonio,movie,O Regresso,Drama,Tom Hardy,Alejandro Gonz√°lez I√±√°rritu,4
+73,Henrique,movie,Birdman,Com√©dia,Michael Keaton,Alejandro Gonz√°lez I√±√°rritu,5
+74,Henrique,movie,Birdman,Com√©dia,Edward Norton,Alejandro Gonz√°lez I√±√°rritu,5
+75,Jesus,serie,The Night Manager,Suspense,Tom Hiddleston,Susanne Bier,3
+76,Jesus,serie,The Night Manager,Suspense,Hugh Laurie,Susanne Bier,5
+77,M√¥nica,serie,Chernobyl,Drama,Jared Harris,Johan Renck,5
+78,M√¥nica,serie,Chernobyl,Drama,Stellan Skarsg√•rd,Johan Renck,2
+79,Isadora,movie,Drive,Suspense,Ryan Gosling,Nicolas Winding Refn,5
+80,Isadora,movie,Drive,Suspense,Carey Mulligan,Nicolas Winding Refn,4
+81,Antonio,movie,Blade Runner 2049,Fic√ß√£o Cient√≠fica,Ryan Gosling,Denis Villeneuve,1
+82,Antonio,movie,Blade Runner 2049,Fic√ß√£o Cient√≠fica,Harrison Ford,Denis Villeneuve,2
+83,Jesus,serie,Westworld,Fic√ß√£o Cient√≠fica,Evan Rachel Wood,Jonathan Nolan,3
+84,Jesus,serie,Westworld,Fic√ß√£o Cient√≠fica,Thandiwe Newton,Jonathan Nolan,3
+85,Henrique,movie,A Chegada,Fic√ß√£o Cient√≠fica,Amy Adams,Denis Villeneuve,5
+86,Henrique,movie,A Chegada,Fic√ß√£o Cient√≠fica,Jeremy Renner,Denis Villeneuve,4
+87,Antonio,movie,A Chegada,Fic√ß√£o Cient√≠fica,Amy Adams,Denis Villeneuve,1
+88,Antonio,movie,A Chegada,Fic√ß√£o Cient√≠fica,Jeremy Renner,Denis Villeneuve,4
+89,M√¥nica,movie,Os Suspeitos,Suspense,Kevin Spacey,Bryan Singer,5
+90,M√¥nica,movie,Os Suspeitos,Suspense,Gabriel Byrne,Bryan Singer,3
+91,Luzimar,movie,12 Homens e uma Senten√ßa,Drama,Henry Fonda,Sidney Lumet,5
+92,Luzimar,movie,12 Homens e uma Senten√ßa,Drama,Lee J. Cobb,Sidney Lumet,1
+93,Antonio,serie,Mindhunter,Crime,Jonathan Groff,David Fincher,2
+94,Antonio,serie,Mindhunter,Crime,Holt McCallany,David Fincher,5
+95,Antonio,serie,House of Cards,Drama,Kevin Spacey,David Fincher,4
+96,Antonio,serie,House of Cards,Drama,Robin Wright,David Fincher,1
+97,M√¥nica,movie,Ilha do Medo,Suspense,Leonardo DiCaprio,Martin Scorsese,4
+98,M√¥nica,movie,Ilha do Medo,Suspense,Mark Ruffalo,Martin Scorsese,3
+99,Antonio,movie,Ilha do Medo,Suspense,Leonardo DiCaprio,Martin Scorsese,4
+100,Antonio,movie,Ilha do Medo,Suspense,Mark Ruffalo,Martin Scorsese,3
+101,Paula,movie,Gangues de Nova York,Crime,Leonardo DiCaprio,Martin Scorsese,4
+102,Paula,movie,Gangues de Nova York,Crime,Daniel Day-Lewis,Martin Scorsese,1
