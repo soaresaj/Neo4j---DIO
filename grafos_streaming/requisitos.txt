@@ -1,0 +1,10 @@
+*Problema:*
+Você foi contratado por um novo serviço de streaming de filme e séries e sua primeira tarefa e projetar o banco de dados.
+Diferente dos sistemas tradicionais, a empresa quer focar nos relacionamentos para criar um sistema de recomendação poderoso.
+*Desafio:*
+Modele e crie um pequeno grafo de conhecimento para esse serviço. O modelo deve incluir:
+- **Entidades (nós)**: User, Movie, Series, Genre, Actor e Director
+- **Conexões (relacionamentos)**: WATCHED (***com propriedade rating***), ACTED_IN, DIRECTED, IN_GENRE.
+*Entrega:*
+1 – Um diagrama ou esboço do modelo de grafo.
+2 – Um scrip Cypher (.cypher) que cria contraints para os nós (por exemplo, UNIQUE para IDs) e popula o banco de dados com pelo menos 10 usuários, 10 filmes/séries e seus respectivos relacionamentos.
