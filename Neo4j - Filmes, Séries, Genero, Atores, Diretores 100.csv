@@ -1,4 +1,4 @@
-user,user_name,type,title,genre,actor,director,rating
+user_id,user_name,type,title,genre,actor,director,rating
 1,Mônica,movie,O Poderoso Chefão,Drama,Marlon Brando,Francis Ford Coppola,2
 1,Mônica,movie,O Poderoso Chefão,Drama,Al Pacino,Francis Ford Coppola,4
 1,Mônica,movie,O Poderoso Chefão,Drama,Al Pacino,Francis Ford Coppola,4
@@ -51,7 +51,7 @@ user,user_name,type,title,genre,actor,director,rating
 5,Isadora,serie,Stranger Things,Ficção Científica,Finn Wolfhard,The Duffer Brothers,1
 2,Antonio,serie,Stranger Things,Ficção Científica,Millie Bobby Brown,The Duffer Brothers,3
 2,Antonio,serie,Stranger Things,Ficção Científica,Finn Wolfhard,The Duffer Brothers,3
-53,Henrique,serie,Stranger Things,Ficção Científica,Millie Bobby Brown,The Duffer Brothers,5
+6,Henrique,serie,Stranger Things,Ficção Científica,Millie Bobby Brown,The Duffer Brothers,5
 6,Henrique,serie,Stranger Things,Ficção Científica,Finn Wolfhard,The Duffer Brothers,2
 5,Isadora,serie,The Crown,Drama,Claire Foy,Peter Morgan,1
 5,Isadora,serie,The Crown,Drama,Olivia Colman,Peter Morgan,5
@@ -101,4 +101,5 @@ user,user_name,type,title,genre,actor,director,rating
 2,Antonio,movie,Ilha do Medo,Suspense,Mark Ruffalo,Martin Scorsese,3
 13,Paula,movie,Gangues de Nova York,Crime,Leonardo DiCaprio,Martin Scorsese,4
 13,Paula,movie,Gangues de Nova York,Crime,Daniel Day-Lewis,Martin Scorsese,1
+
 
