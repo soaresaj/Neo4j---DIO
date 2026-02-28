@@ -1,0 +1,128 @@
+// ===================================================
+// Inicializar a instância
+// ===================================================
+MATCH (n)
+DETACH DELETE n;
+// Remover constraints e índices (se necessário)
+CALL apoc.schema.assert({}, {});
+
+// ===================================================
+// PASSO 1: CRIAR CONSTRAINTS E ÍNDICES (executar primeiro)
+// ===================================================
+CREATE CONSTRAINT IF NOT EXISTS FOR (u:User) REQUIRE u.id IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (m:Movie) REQUIRE m.titulo IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (s:Serie) REQUIRE s.titulo IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (g:Genre) REQUIRE g.nome IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (a:Actor) REQUIRE a.nome IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (d:Director) REQUIRE d.nome IS UNIQUE;
+
+CREATE INDEX IF NOT EXISTS FOR (u:User) ON (u.nome);
+CREATE INDEX IF NOT EXISTS FOR (m:Movie) ON (m.genero);
+CREATE INDEX IF NOT EXISTS FOR (s:Serie) ON (s.genero);
+
+// ===================================================
+// PASSO 2: IMPORTAR BASE (Filmes, Séries, Atores, Gênero)
+// ===================================================
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/grafos_streaming/Neo4j%20-%20Filmes%2C%20S%C3%A9ries%2C%20Genero%2C%20Atores%2C%20Diretores%20100.csv' AS row
+WITH row, toLower(trim(row.type)) AS tipo_normalizado
+MERGE (g:Genre {nome: trim(row.genre)})
+MERGE (a:Actor {nome: trim(row.actor)})
+MERGE (d:Director {nome: trim(row.director)})
+WITH g, a, d, row, tipo_normalizado
+// Filmes
+FOREACH (_ IN CASE WHEN tipo_normalizado IN ['movie', 'film', 'filme'] THEN [1] ELSE [] END |
+    MERGE (m:Movie:Conteudo {titulo: trim(row.title)})
+    ON CREATE SET m.genero = trim(row.genre),
+                                  m.caption = LEFT(trim(row.title), 18)
+    MERGE (m)-[:PERTENCE_A]->(g)
+    MERGE (a)-[:ACTED_IN]->(m)
+    MERGE (d)-[:DIRECTED]->(m)
+)
+// Séries
+FOREACH (_ IN CASE WHEN tipo_normalizado IN ['serie', 'series'] THEN [1] ELSE [] END |
+    MERGE (s:Serie:Conteudo {titulo: trim(row.title)})
+    ON CREATE SET s.genero = trim(row.genre),
+                                  s.caption = LEFT(trim(row.title), 18)
+    MERGE (s)-[:PERTENCE_A]->(g)
+    MERGE (a)-[:ACTED_IN]->(s)
+    MERGE (d)-[:DIRECTED]->(s)
+)
+RETURN 'Passo 2 concluído' AS status, count(*) AS linhas;
+
+// ===================================================
+// PASSO 3: IMPORTAR BASE (Usuários)
+// ===================================================
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/grafos_streaming/Neo4j%20-%20Filmes%2C%20S%C3%A9ries%2C%20Genero%2C%20Atores%2C%20Diretores%20100.csv' AS row
+
+// Mapear dinamicamente os campos de usuário
+WITH row,
+COALESCE(row.user_id) AS id_usuario,
+COALESCE(row.user_name) AS nome_usuario
+
+// Filtrar apenas linhas com ID válido
+WHERE id_usuario IS NOT NULL AND toString(id_usuario) <> ''
+
+// Criar usuário
+MERGE (u:User {id: toString(trim(id_usuario))})
+ON CREATE SET u.nome = CASE 
+WHEN nome_usuario IS NOT NULL AND toString(nome_usuario) <> '' 
+THEN toString(trim(nome_usuario))
+ELSE 'Usuário ' + toString(id_usuario)
+END,
+u.caption = LEFT(trim(nome_candidato), 18)
+
+RETURN 'Usuários processados' AS status, 
+count(u) AS total,
+collect(u.nome)[0..5] AS amostra;
+
+// ===================================================
+// PASSO 4: CRIAR RELACIONAMENTOS WATCHED - VERSÃO BASEADA NO DIAGNÓSTICO
+// ===================================================
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/grafos_streaming/Neo4j%20-%20Filmes%2C%20S%C3%A9ries%2C%20Genero%2C%20Atores%2C%20Diretores%20100.csv' AS row
+WITH row
+// Filtrar apenas linhas com dados válidos
+WHERE row.user_id IS NOT NULL 
+  AND toString(row.user_id) <> ''
+  AND row.rating IS NOT NULL 
+  AND toString(row.rating) <> ''
+
+// Preparar os dados
+WITH row,
+     toString(trim(row.user_id)) AS user_id,
+     toInteger(trim(row.rating)) AS rating,
+     toLower(trim(row.type)) AS type,
+     toString(trim(row.title)) AS title
+
+// Encontrar o usuário
+MATCH (u:User {id: user_id})
+
+// Processar Filmes
+OPTIONAL MATCH (m:Movie {titulo: title})
+WHERE type IN ['movie'] 
+  AND m IS NOT NULL
+
+// Criar relacionamento para filmes
+FOREACH (_ IN CASE WHEN m IS NOT NULL THEN [1] ELSE [] END |
+    MERGE (u)-[w:WATCHED]->(m)
+    SET w.rating = rating
+)
+
+// Processar Séries (em um bloco separado)
+WITH u, title, type, rating, row
+WHERE type IN ['serie']
+
+OPTIONAL MATCH (s:Serie {titulo: title})
+WHERE s IS NOT NULL
+
+// Criar relacionamento para séries
+FOREACH (_ IN CASE WHEN s IS NOT NULL THEN [1] ELSE [] END |
+    MERGE (u)-[w:WATCHED]->(s)
+    SET w.rating = rating
+)
+
+// Retornar resultado (opcional)
+RETURN 'Processamento concluído' AS status, 
+       count(*) AS linhas_processadas;
+
+
+
