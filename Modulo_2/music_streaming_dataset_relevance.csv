@@ -1,0 +1,101 @@
+user_id,playlist_id,playlist_name,song_id,song_title,album,artist,genre,genre_relevance
+U1,P5,Evening Jazz,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U2,P10,Jazz Lounge,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U3,P15,Smooth Jazz,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U4,P20,Night Jazz,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U5,P25,Jazz Classics,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U6,P30,Jazz Night,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U7,P35,Evening Jazz,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U8,P40,Jazz Mood,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U9,P45,Jazz Evening,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U10,P50,Classic Jazz,S10,Jazz Cafe,Midnight Jazz,Blue Notes,jazz,1
+U1,P4,Urban Flow,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U2,P9,HipHop Streets,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U3,P14,City Beats,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U4,P19,Street Mix,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U5,P24,Urban Party,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U6,P29,Urban Groove,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U7,P34,HipHop Mix,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U8,P39,Street HipHop,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U9,P44,HipHop Night,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U10,P49,HipHop Flow,S9,Rhythm Street,Street Rhythm,City Flow,hip-hop,0.9
+U1,P4,Urban Flow,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U2,P9,HipHop Streets,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U3,P14,City Beats,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U4,P19,Street Mix,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U5,P24,Urban Party,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U6,P29,Urban Groove,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U7,P34,HipHop Mix,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U8,P39,Street HipHop,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U9,P44,HipHop Night,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U10,P49,HipHop Flow,S8,Urban Beats,Street Rhythm,City Flow,hip-hop,0.9
+U1,P1,Chill Vibes,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U2,P6,Electronic Nights,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U3,P11,Synth Lovers,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U4,P16,Night Drive,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U5,P21,Synth Chill,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U6,P26,Electro Mix,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U7,P31,Synth Drive,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U8,P36,Synth Retro,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U9,P41,Synth Atmosphere,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U10,P46,Synth Motion,S3,Electric Dreams,Neon Future,Future Pulse,electronic,0.9
+U1,P2,Rock Energy,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U2,P7,Rock Legends,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U3,P12,Hard Rock,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U4,P17,Rock Hits,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U5,P22,Classic Rock,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U6,P27,Rock Party,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U7,P32,Metal Edge,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U8,P37,Rock Arena,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U9,P42,Rock Power,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U10,P47,Rock Session,S5,Guitar Heroes,Steel Strings,Iron Pulse,rock,1
+U1,P2,Rock Energy,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U2,P7,Rock Legends,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U3,P12,Hard Rock,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U4,P17,Rock Hits,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U5,P22,Classic Rock,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U6,P27,Rock Party,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U7,P32,Metal Edge,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U8,P37,Rock Arena,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U9,P42,Rock Power,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U10,P47,Rock Session,S4,Rock the Night,Steel Strings,Iron Pulse,rock,1
+U1,P3,Acoustic Mood,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U2,P8,Calm Acoustic,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U3,P13,Acoustic Morning,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U4,P18,Acoustic Relax,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U5,P23,Acoustic Coffee,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U6,P28,Acoustic Evening,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U7,P33,Soft Acoustic,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U8,P38,Acoustic Chill,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U9,P43,Acoustic Relax,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U10,P48,Acoustic Sunset,S6,Acoustic Breeze,Morning Acoustic,Sunny Strings,acoustic,1
+U1,P3,Acoustic Mood,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U2,P8,Calm Acoustic,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U3,P13,Acoustic Morning,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U4,P18,Acoustic Relax,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U5,P23,Acoustic Coffee,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U6,P28,Acoustic Evening,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U7,P33,Soft Acoustic,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U8,P38,Acoustic Chill,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U9,P43,Acoustic Relax,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U10,P48,Acoustic Sunset,S7,Soft Rain,Morning Acoustic,Sunny Strings,acoustic,1
+U1,P1,Chill Vibes,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U2,P6,Electronic Nights,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U3,P11,Synth Lovers,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U4,P16,Night Drive,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U5,P21,Synth Chill,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U6,P26,Electro Mix,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U7,P31,Synth Drive,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U8,P36,Synth Retro,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U9,P41,Synth Atmosphere,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U10,P46,Synth Motion,S2,Midnight Drive,Digital Dreams,SynthWave Band,electronic,1
+U1,P1,Chill Vibes,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U2,P6,Electronic Nights,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U3,P11,Synth Lovers,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U4,P16,Night Drive,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U5,P21,Synth Chill,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U6,P26,Electro Mix,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U7,P31,Synth Drive,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U8,P36,Synth Retro,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U9,P41,Synth Atmosphere,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
+U10,P46,Synth Motion,S1,Neon Lights,Digital Dreams,SynthWave Band,electronic,1
