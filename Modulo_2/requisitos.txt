@@ -1,1 +1,10 @@
-
+*Criando um Algoritmo de Recomendação de Músicas com Base em Grafos*
+**Desafio**
+Você foi contratado para desenvolver um sistema de recomendação de músicas baseado em grafos, capaz de identificar padrões de comportamento dos usuários e sugerir novas faixas de forma personalizada.
+Nesse sistema, os dados serão modelados em um grafo para capturar de forma eficiente as relações entre usuários, músicas e artistas. O modelo deve:
+•	***Representar entidades*** como Usuários, Músicas, Artistas e Gêneros como nós do grafo;
+•	***Representar interações*** entre essas entidades — como escutar, curtir, seguir ou adicionar à playlist — como relacionamentos (arestas) contendo propriedades relevantes (por exemplo: data da interação, número de reproduções ou nível de preferência);
+•	***Utilizar consultas Cypher*** para explorar conexões no grafo e gerar recomendações personalizadas com base nos hábitos de escuta e nas afinidades musicais dos usuários.
+Ao explorar a estrutura do grafo, o sistema será capaz de identificar padrões como usuários com gostos semelhantes, artistas frequentemente associados e gêneros musicais correlacionados, permitindo recomendações mais precisas e contextualizadas.
+**Exemplo de pergunta que o sistema deve responder**
+•	Quais artistas podem ser recomendados a um usuário com base nos artistas de rock mais ouvidos no grafo por usuários com preferências musicais semelhantes?
