@@ -217,5 +217,39 @@ RETURN rec.titulo AS recommended_song, count(*) AS similarity
 ORDER BY similarity DESC
 LIMIT 10
 
+// Quais artistas de rock o usuário U1 ouve
+MATCH (u:User {id: 'U1'})-[:OUVIU_MUSICA]->(m:Music)<-[:CRIOU_MUSICA]-(a:Artist)
+MATCH (a)-[:TEM_RELEVANCIA]->(g:Genre {nome: 'rock'})
+RETURN DISTINCT a.nome AS artistas_rock_do_usuario;
+
+// Quem são os usuários similares (ouvem os mesmos artistas de rock)
+MATCH (u:User {id: 'U1'})-[:OUVIU_MUSICA]->(m:Music)<-[:CRIOU_MUSICA]-(a:Artist)
+MATCH (a)-[:TEM_RELEVANCIA]->(g:Genre {nome: 'rock'})
+MATCH (similar:User)-[:OUVIU_MUSICA]->(:Music)<-[:CRIOU_MUSICA]-(a)
+WHERE similar <> u
+RETURN similar.id AS usuarios_similares, 
+       collect(DISTINCT a.nome) AS artistas_compartilhados,
+       count(DISTINCT a) AS total_compartilhados
+ORDER BY total_compartilhados DESC;
+
+// O que esses usuários similares ouvem que U1 não ouve
+MATCH (u:User {id: 'U1'})
+MATCH (similar:User)-[:OUVIU_MUSICA]->(m:Music)<-[:CRIOU_MUSICA]-(recArtist:Artist)
+WHERE similar <> u
+  AND EXISTS {
+    MATCH (u)-[:OUVIU_MUSICA]->(:Music)<-[:CRIOU_MUSICA]-(rockArtist:Artist)
+    MATCH (rockArtist)-[:TEM_RELEVANCIA]->(:Genre {nome: 'rock'})
+    MATCH (similar)-[:OUVIU_MUSICA]->(:Music)<-[:CRIOU_MUSICA]-(rockArtist)
+  }
+  AND NOT EXISTS {
+    MATCH (u)-[:OUVIU_MUSICA]->(:Music)<-[:CRIOU_MUSICA]-(recArtist)
+  }
+RETURN recArtist.nome AS artista_recomendado,
+       collect(DISTINCT similar.id) AS recomendado_por,
+       count(DISTINCT similar) AS votos
+ORDER BY votos DESC
+LIMIT 10;
+
+
 
 
