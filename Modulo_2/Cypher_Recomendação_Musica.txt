@@ -1,0 +1,221 @@
+// ===================================================
+// Inicializar a instância
+// ===================================================
+MATCH (n)
+DETACH DELETE n;
+// Remover constraints e índices (se necessário)
+CALL apoc.schema.assert({}, {});
+// ===================================================
+// CONSTRAINTS E ÍNDICES
+// ===================================================
+// Constraints de unicidade
+CREATE CONSTRAINT IF NOT EXISTS FOR (u:User) REQUIRE u.id IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (m:Music) REQUIRE m.id IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (a:Artist) REQUIRE a.nome IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (alb:Album) REQUIRE alb.nome IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (g:Genre) REQUIRE g.nome IS UNIQUE;
+CREATE CONSTRAINT IF NOT EXISTS FOR (p:Playlist) REQUIRE p.id IS UNIQUE;
+
+// Índices para consultas frequentes
+CREATE INDEX IF NOT EXISTS FOR (m:Music) ON (m.titulo);
+CREATE INDEX IF NOT EXISTS FOR (p:Playlist) ON (p.nome);
+// ===================================================
+// 2. CARREGAR CSV E CRIAR O GRAFO
+// ===================================================
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/Modulo_2/music_streaming_dataset_relevance.csv' AS row
+// Processar cada linha do CSV
+WITH row
+
+// 2.1 CRIAR GÊNERO
+MERGE (g:Genre {nome: trim(row.genre)})
+
+// 2.2 CRIAR ARTISTA
+MERGE (a:Artist {nome: trim(row.artist)})
+ON CREATE SET a.genero_relevancia = toFloat(row.genre)
+
+// 2.3 CRIAR ALBUM
+MERGE (alb:Album {nome: trim(row.album)})
+
+// 2.4 CRIAR MÚSICA (Music)
+MERGE (m:Music {id: row.song_id})
+ON CREATE SET m.titulo = trim(row.song_title),
+                              m.caption = trim(row.song_title)
+// 2.5 CRIAR PLAYLIST
+MERGE (p:Playlist {id: row.playlist_id})
+ON CREATE SET p.nome = trim(row.playlist_name)
+
+// 2.6 CRIAR USUÁRIO
+MERGE (u:User {id: row.user_id})
+
+// 2.7 CRIAR RELACIONAMENTOS ENTRE NÓS EXISTENTES
+WITH g, a, alb, m, p, u, row
+
+// Música pertence a gênero (com relevância)
+MERGE (m)-[tg:TEM_GENERO]->(g)
+
+// Música pertence a album
+MERGE (m)-[ta:TEM_ALBUM]->(alb)
+
+// Artista criou música
+MERGE (a)-[c:CRIOU_MUSICA]->(m)
+
+// Artista tem a gênero (com relevância)
+MERGE (a)-[tr:TEM_RELEVANCIA]->(g)
+ON CREATE SET tr.relevancia = toFloat(row.genre_relevance)
+ON MATCH SET tr.relevancia = toFloat(row.genre_relevance)
+
+// Playlist inclui música
+MERGE (p)-[i:INCLUI_MUSICA]->(m)
+ON CREATE SET i.data_adicao = timestamp()
+
+// Usuário escuta música
+MERGE (u)-[o:OUVIU_MUSICA]->(m)
+ON CREATE SET o.data_ouvindo = timestamp()
+
+// Usuário criou playlist
+MERGE (u)-[cp:CRIOU_PLAYLIST]->(p)
+ON CREATE SET cp.data_criacao = timestamp()
+
+// Usuário segue artista
+MERGE (u)-[sa:SEGUE_ARTIST]->(a)
+ON CREATE SET sa.data_inicio = timestamp()
+
+RETURN 'Importação concluída' AS status, 
+       count(DISTINCT u) AS usuarios,
+       count(DISTINCT p) AS playlists,
+       count(DISTINCT m) AS musicas,
+       count(DISTINCT a) AS artistas,
+       count(DISTINCT alb) AS albuns,
+       count(DISTINCT g) AS generos;
+
+// Estatística geral
+MATCH (n) RETURN 'Nós' AS tipo, count(n) AS total
+UNION ALL
+MATCH ()-[r]->() RETURN 'Relacionamentos' AS tipo, count(r) AS total;
+
+// Nós por tipo
+MATCH (u:User) RETURN 'Usuários' AS tipo, count(u) AS total
+UNION ALL
+MATCH (p:Playlist) RETURN 'Playlists' AS tipo, count(p) AS total
+UNION ALL
+MATCH (m:Music) RETURN 'Músicas' AS tipo, count(m) AS total
+UNION ALL
+MATCH (a:Artist) RETURN 'Artistas' AS tipo, count(a) AS total
+UNION ALL
+MATCH (alb:Album) RETURN 'Álbuns' AS tipo, count(alb) AS total
+UNION ALL
+MATCH (g:Genre) RETURN 'Gêneros' AS tipo, count(g) AS total;
+
+// Criação de Playlist
+MATCH (u:User)-[:CRIOU_PLAYLIST]->(p:Playlist)-[:INCLUI_MUSICA]->(m:Music)-[:TEM_GENERO]->(g:Genre)
+RETURN u.id, p.nome, m.titulo, g.nome
+LIMIT 10;
+
+// Usuários com Mais Playlists Criadas
+MATCH (u:User)-[:CRIOU_PLAYLIST]->(p:Playlist)
+RETURN u.id AS usuario, count(p) AS total_playlists
+ORDER BY total_playlists DESC
+LIMIT 10;
+
+// Usuários que Mais Ouvem Músicas
+MATCH (u:User)-[:OUVIU_MUSICA]->(m:Music)
+RETURN u.id AS usuario, count(m) AS musicas_ouvidas
+ORDER BY musicas_ouvidas DESC
+LIMIT 10;
+
+// Músicas Mais Incluídas em Playlists
+MATCH (p:Playlist)-[:INCLUI_MUSICA]->(m:Music)
+RETURN m.titulo AS musica, 
+       m.id AS id_musica,
+       count(p) AS vezes_em_playlists
+ORDER BY vezes_em_playlists ASC
+LIMIT 25;
+
+// Artistas com Mais Músicas no Catálogo
+MATCH (a:Artist)-[:CRIOU_MUSICA]->(m:Music)
+RETURN a.nome AS artista, count(m) AS total_musicas
+ORDER BY total_musicas DESC
+LIMIT 20;
+
+// Músicas por Gênero
+MATCH (m:Music)-[:TEM_GENERO]->(g:Genre)
+RETURN g.nome AS genero, count(m) AS total_musicas
+ORDER BY total_musicas DESC;
+
+// Playlists com Mais Músicas
+MATCH (p:Playlist)-[:INCLUI_MUSICA]->(m:Music)
+RETURN p.nome AS playlist, 
+       p.id AS playlist_id,
+       count(m) AS total_musicas
+ORDER BY total_musicas DESC
+LIMIT 5;
+
+// Playlists por Usuário
+MATCH (u:User)-[:CRIOU_PLAYLIST]->(p:Playlist)
+RETURN u.id AS usuario, collect(p.nome) AS playlists
+ORDER BY u.id
+LIMIT 5;
+
+// Artistas com Maior Relevância em Cada Gênero
+MATCH (a:Artist)-[tr:TEM_RELEVANCIA]->(g:Genre)
+RETURN g.nome AS genero, 
+       a.nome AS artista, 
+       tr.relevancia AS relevancia
+ORDER BY g.nome, tr.relevancia DESC;
+
+// Recomendar Músicas de Gêneros que o Usuário já Ouviu
+MATCH (u:User {id: 'U15'})-[:OUVIU_MUSICA]->(m:Music)-[:TEM_GENERO]->(g:Genre)
+WITH u, g, count(m) AS peso
+MATCH (recomendacao:Music)-[:TEM_GENERO]->(g)
+WHERE NOT EXISTS((u)-[:OUVIU_MUSICA]->(recomendacao))
+RETURN recomendacao.titulo AS musica, 
+       g.nome AS genero, 
+       sum(peso) AS score_recomendacao
+ORDER BY score_recomendacao DESC
+LIMIT 10;
+
+// Usuários como Você também Ouviram
+MATCH (u:User {id: 'U11'})-[:OUVIU_MUSICA]->(m:Music)
+MATCH (m)<-[:OUVIU_MUSICA]-(similar:User)
+WHERE similar <> u
+MATCH (similar)-[:OUVIU_MUSICA]->(recomendacao:Music)
+WHERE NOT EXISTS((u)-[:OUVIU_MUSICA]->(recomendacao))
+RETURN recomendacao.titulo AS musica, 
+       count(DISTINCT similar) AS usuarios_similares,
+       collect(DISTINCT similar.id)[0..5] AS exemplos
+ORDER BY usuarios_similares DESC
+LIMIT 10;
+
+//Artistas Com Mais Músicas em Playlists)
+MATCH (a:Artist)-[:CRIOU_MUSICA]->(m:Music)<-[:INCLUI_MUSICA]-(p:Playlist)
+RETURN a.nome AS artista, 
+       count(DISTINCT m) AS musicas_em_playlists,
+       count(DISTINCT p) AS playlists_distintas
+ORDER BY musicas_em_playlists DESC
+
+// Usuários Mais Ativos (músicas ouvidas + playlists criadas + artistas seguidos)
+MATCH (u:User)
+OPTIONAL MATCH (u)-[:OUVIU_MUSICA]->(m)
+OPTIONAL MATCH (u)-[:CRIOU_PLAYLIST]->(p)
+OPTIONAL MATCH (u)-[:SEGUE_ARTIST]->(a)
+RETURN u.id AS usuario,
+       count(DISTINCT m) AS musicas_ouvidas,
+       count(DISTINCT p) AS playlists_criadas,
+       count(DISTINCT a) AS artistas_seguidos,
+       count(DISTINCT m) + count(DISTINCT p) + count(DISTINCT a) AS score_atividade
+ORDER BY score_atividade DESC
+LIMIT 20;
+
+// Recomendação Baseada em Playlists semelhantes
+MATCH (u:User {id:'U1'})-[:CRIOU_PLAYLIST]->(p:Playlist)
+MATCH (p)-[:INCLUI_MUSICA]->(m:Music)
+MATCH (other:Playlist)-[:INCLUI_MUSICA]->(m)
+WHERE p <> other
+MATCH (other)-[:INCLUI_MUSICA]->(rec:Music)
+WHERE NOT EXISTS {MATCH (p)-[:INCLUI_MUSICA]->(rec)}
+RETURN rec.titulo AS recommended_song, count(*) AS similarity
+ORDER BY similarity DESC
+LIMIT 10
+
+
+
