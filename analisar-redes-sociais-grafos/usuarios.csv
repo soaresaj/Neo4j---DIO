@@ -1,0 +1,51 @@
+id,nome,username,cidade,idade,seguidores_count
+1,Ana Silva,ana_silva,São Paulo,28,1500
+2,Bruno Costa,bruno_costa,Rio de Janeiro,32,2300
+3,Carlos Mendes,carlos_m,Belo Horizonte,25,890
+4,Diana Santos,diana_s,São Paulo,30,3200
+5,Eduardo Lima,edu_lima,Curitiba,27,450
+6,Fernanda Rocha,fer_rocha,São Paulo,29,1800
+7,Gabriel Souza,gab_souza,Rio de Janeiro,31,920
+8,Helena Martins,helena_m,Brasília,26,2100
+9,Igor Ferreira,igor_f,São Paulo,33,670
+10,Julia Alves,julia_alves,Porto Alegre,24,1950
+11,Kevin Santos,kevin_s,Recife,29,540
+12,Larissa Oliveira,lari_oli,São Paulo,27,2800
+13,Marcos Pereira,marcos_p,Rio de Janeiro,35,1100
+14,Natalia Costa,nat_costa,Belo Horizonte,26,3500
+15,Otavio Rodrigues,otavio_r,Salvador,31,780
+16,Patricia Lima,patty_lima,São Paulo,28,2200
+17,Rafael Barbosa,rafa_barb,Curitiba,30,1350
+18,Sabrina Martins,sab_martins,Brasília,25,990
+19,Thiago Souza,thi_souza,Fortaleza,32,1670
+20,Ursula Fernandes,ursula_f,São Paulo,29,2450
+21,Vinicius Dias,vini_dias,Rio de Janeiro,27,820
+22,Wanda Gomes,wanda_g,Manaus,34,1120
+23,Xavier Costa,xavier_c,São Paulo,26,3100
+24,Yara Soares,yara_s,Recife,28,640
+25,Zeca Almeida,zeca_a,Porto Alegre,33,1890
+26,Amanda Reis,amanda_r,São Paulo,24,2650
+27,Bernardo Nunes,berna_n,Belo Horizonte,31,970
+28,Camila Torres,cami_torres,Rio de Janeiro,29,3300
+29,Daniel Cardoso,dani_card,Salvador,27,1480
+30,Elisa Campos,elisa_c,São Paulo,25,2100
+31,Fabio Rocha,fabio_r,Curitiba,32,890
+32,Giovana Santos,gio_santos,Brasília,26,1760
+33,Henrique Lima,henri_lima,Fortaleza,30,1230
+34,Isabela Moreira,isa_moreira,São Paulo,28,2980
+35,Jorge Batista,jorge_b,Rio de Janeiro,34,1050
+36,Karina Pinto,kari_pinto,Recife,27,3450
+37,Lucas Freitas,lucas_f,Porto Alegre,29,720
+38,Marina Silva,mari_silva,São Paulo,31,2570
+39,Nicolas Araujo,nic_araujo,Belo Horizonte,26,1340
+40,Olivia Mendes,oli_mendes,Salvador,28,1920
+41,Pedro Henrique,pedro_h,São Paulo,30,2250
+42,Quiteria Souza,qui_souza,Curitiba,25,880
+43,Roberto Carlos,rob_carlos,Brasília,33,3680
+44,Sofia Ribeiro,sofia_r,Rio de Janeiro,27,1590
+45,Tomas Andrade,tomas_a,Fortaleza,29,2340
+46,Vanessa Correia,vane_correia,São Paulo,32,1870
+47,Wagner Lopes,wag_lopes,Recife,28,1010
+48,Xuxa Menezes,xuxa_m,Porto Alegre,26,2720
+49,Yasmin Farias,yas_farias,São Paulo,24,3210
+50,Zuleika Monteiro,zule_m,Belo Horizonte,31,1450

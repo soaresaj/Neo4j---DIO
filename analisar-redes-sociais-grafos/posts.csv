@@ -1,0 +1,101 @@
+id,usuario_id,conteudo,curtidas,data
+1,1,Adorei meu novo café da manhã!,45,2024-01-15T08:30:00
+2,2,Treino de hoje foi intenso 💪,78,2024-01-15T09:15:00
+3,4,Viagem incrível para a praia,120,2024-01-14T18:20:00
+4,1,Dicas de produtividade para 2024,65,2024-01-13T10:00:00
+5,6,Meu novo projeto está no ar!,92,2024-01-12T14:30:00
+6,3,Final de semana relaxante,38,2024-01-11T16:45:00
+7,7,Música nova no Spotify,55,2024-01-10T20:00:00
+8,4,Receita de bolo de chocolate,103,2024-01-09T15:30:00
+9,12,Iniciando meu canal no YouTube,87,2024-01-15T11:00:00
+10,14,Dicas de moda para o verão,156,2024-01-14T13:45:00
+11,16,Novo restaurante no centro,72,2024-01-13T19:20:00
+12,23,Tecnologia está mudando tudo,189,2024-01-12T08:15:00
+13,28,Fotografia é minha paixão,145,2024-01-11T14:30:00
+14,34,Melhor série que assisti,98,2024-01-10T21:00:00
+15,6,Agradecendo o apoio de todos,76,2024-01-09T10:30:00
+16,9,Corrida matinal perfeita,54,2024-01-15T06:45:00
+17,10,Viagem para Porto Alegre,89,2024-01-14T17:00:00
+18,13,Reflexões sobre a vida,67,2024-01-13T20:30:00
+19,15,Nordeste é lindo demais,112,2024-01-12T16:15:00
+20,18,Brasília sob um novo olhar,83,2024-01-11T12:00:00
+21,20,Empreendedorismo em SP,134,2024-01-10T09:45:00
+22,5,Curitiba e suas belezas,61,2024-01-09T18:20:00
+23,26,Fashion week foi incrível,178,2024-01-15T15:30:00
+24,30,Café especial da tarde,58,2024-01-14T16:10:00
+25,38,Design de interiores moderno,95,2024-01-13T11:25:00
+26,41,Programação é vida,127,2024-01-12T13:50:00
+27,43,Política e sociedade,201,2024-01-11T10:15:00
+28,49,Lifestyle saudável,167,2024-01-10T07:30:00
+29,8,Brasília no fim de semana,71,2024-01-09T19:45:00
+30,11,Recife tem as melhores praias,88,2024-01-15T14:20:00
+31,19,Fortaleza apaixonante,79,2024-01-14T12:35:00
+32,22,Manaus e a Amazônia,106,2024-01-13T17:50:00
+33,25,Porto Alegre gastronômica,92,2024-01-12T20:10:00
+34,27,BH tem a melhor comida,85,2024-01-11T15:25:00
+35,29,Salvador e o carnaval,143,2024-01-10T11:40:00
+36,31,Curitiba verde e sustentável,77,2024-01-09T08:55:00
+37,2,Malhação noturna top,64,2024-01-15T21:15:00
+38,21,Rio é sempre Rio,118,2024-01-14T10:30:00
+39,35,Fotografia urbana RJ,101,2024-01-13T14:45:00
+40,44,Arte contemporânea,89,2024-01-12T18:00:00
+41,14,Moda sustentável é o futuro,152,2024-01-11T09:20:00
+42,36,Recife cultural,97,2024-01-10T16:35:00
+43,28,Ensaio fotográfico maravilhoso,138,2024-01-09T13:50:00
+44,43,Debate político construtivo,187,2024-01-15T10:05:00
+45,12,Vlog novo no canal,94,2024-01-14T15:20:00
+46,23,IA e o futuro do trabalho,176,2024-01-13T08:35:00
+47,34,Maratona de séries,103,2024-01-12T22:50:00
+48,4,Praia do Nordeste paradisíaca,129,2024-01-11T17:05:00
+49,1,Produtividade sem estresse,73,2024-01-10T12:20:00
+50,49,Rotina de skincare,159,2024-01-09T07:35:00
+51,26,Desfile de moda SP,171,2024-01-15T16:50:00
+52,38,Decoração minimalista,86,2024-01-14T11:05:00
+53,6,Projeto open source lançado,108,2024-01-13T09:20:00
+54,16,Brunch perfeito,69,2024-01-12T10:35:00
+55,20,Networking em eventos,122,2024-01-11T14:50:00
+56,30,Café gourmet da manhã,63,2024-01-10T08:05:00
+57,41,Code review e boas práticas,115,2024-01-09T16:20:00
+58,7,Playlist para estudar,81,2024-01-15T19:35:00
+59,13,Filosofia do cotidiano,74,2024-01-14T21:50:00
+60,21,Sunset no Rio,126,2024-01-13T18:05:00
+61,28,Workshop de fotografia,133,2024-01-12T15:20:00
+62,43,Análise política semanal,194,2024-01-11T11:35:00
+63,9,Treino funcional matinal,59,2024-01-10T06:50:00
+64,10,Gastronomia gaúcha,91,2024-01-09T19:05:00
+65,15,Salvador histórico,99,2024-01-15T13:20:00
+66,18,Arquitetura de Brasília,78,2024-01-14T09:35:00
+67,22,Ecoturismo amazônico,104,2024-01-13T16:50:00
+68,25,Chimarrão e tradição,84,2024-01-12T12:05:00
+69,27,Pão de queijo artesanal,88,2024-01-11T08:20:00
+70,29,Acarajé delicioso,96,2024-01-10T17:35:00
+71,31,Parques de Curitiba,71,2024-01-09T14:50:00
+72,5,Trilha na natureza,66,2024-01-15T07:05:00
+73,11,Frevo e cultura,82,2024-01-14T20:20:00
+74,19,Beach park aventura,107,2024-01-13T12:35:00
+75,32,Política em Brasília,76,2024-01-12T09:50:00
+76,33,Jangada ao pôr do sol,93,2024-01-11T18:05:00
+77,35,Street art carioca,111,2024-01-10T13:20:00
+78,37,Vinhos do sul,87,2024-01-09T20:35:00
+79,39,Arte urbana BH,79,2024-01-15T15:50:00
+80,40,Pelourinho encantador,102,2024-01-14T11:05:00
+81,42,Arquitetura curitibana,68,2024-01-13T07:20:00
+82,44,Galeria de arte RJ,95,2024-01-12T16:35:00
+83,45,Vento e mar em Fortaleza,89,2024-01-11T13:50:00
+84,46,Vida em São Paulo,136,2024-01-10T10:05:00
+85,47,Cultura pernambucana,85,2024-01-09T18:20:00
+86,48,Tradições gaúchas,91,2024-01-15T14:35:00
+87,50,Feira hippie BH,77,2024-01-14T10:50:00
+88,3,Montanhas mineiras,70,2024-01-13T17:05:00
+89,8,Congresso Nacional,72,2024-01-12T13:20:00
+90,17,Bosque Alemão,65,2024-01-11T09:35:00
+91,24,Olinda colorida,98,2024-01-10T15:50:00
+92,32,Eixo Monumental,74,2024-01-09T12:05:00
+93,36,Marco Zero do Recife,101,2024-01-15T08:20:00
+94,14,Tendências fashion 2024,164,2024-01-14T16:35:00
+95,23,Blockchain revolucionário,183,2024-01-13T10:50:00
+96,34,Séries sci-fi imperdíveis,109,2024-01-12T21:05:00
+97,49,Self-care é essencial,173,2024-01-11T07:20:00
+98,12,Behind the scenes vlog,99,2024-01-10T14:35:00
+99,28,Golden hour fotografia,147,2024-01-09T17:50:00
+100,43,Democracia em debate,198,2024-01-15T11:05:00
