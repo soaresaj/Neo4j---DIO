@@ -1,1 +1,199 @@
+// =============================================
+// **CONSULTAS E ESTATÍSTICAS**
+// =============================================
+
+// 1 - Estatística geral
+MATCH (n) RETURN 'Nós' AS tipo, count(n) AS total
+UNION ALL
+MATCH ()-[r]->() RETURN 'Relacionamentos' AS tipo, count(r) AS total;
+Resposta:
+╒═════════════════╤═════╕
+│tipo             │total│
+╞═════════════════╪═════╡
+│"Nós"            │381  │
+├─────────────────┼─────┤
+│"Relacionamentos"│1889 │
+└─────────────────┴─────┘
+
+// 2 - Nós por tipo
+MATCH (u:Usuario) RETURN 'Usuários' AS tipo, count(u) AS total
+UNION ALL
+MATCH (p:Post) RETURN 'Posts' AS tipo, count(p) AS total
+UNION ALL
+MATCH (g:Grupo) RETURN 'Grupos' AS tipo, count(g) AS total
+UNION ALL
+MATCH (c:Categoria) RETURN 'Categorias' AS tipo, count(c) AS total
+UNION ALL
+MATCH (h:Hashtag) RETURN 'Hashtags' AS tipo, count(h) AS total
+UNION ALL
+MATCH (com:Comentario) RETURN 'Comentários' AS tipo, count(com) AS total;
+Resposta:
+╒═════════════╤═════╕
+│tipo         │total│
+╞═════════════╪═════╡
+│"Usuários"   │50   │
+├─────────────┼─────┤
+│"Posts"      │100  │
+├─────────────┼─────┤
+│"Grupos"     │10   │
+├─────────────┼─────┤
+│"Categorias" │9    │
+├─────────────┼─────┤
+│"Hashtags"   │112  │
+├─────────────┼─────┤
+│"Comentários"│100  │
+└─────────────┴─────┘
+
+// 3 - Usuários Mais Influentes (por seguidores)
+MATCH (u:Usuario)<-[:SEGUE]-(seguidor)
+RETURN u.nome, 
+       u.username, 
+       count(seguidor) AS totalSeguidores
+ORDER BY totalSeguidores DESC
+LIMIT 10;
+Resposta:
+╒══════════════════╤═════════════╤═══════════════╕
+│u.nome            │u.username   │totalSeguidores│
+╞══════════════════╪═════════════╪═══════════════╡
+│"Ana Silva"       │"ana_silva"  │45             │
+├──────────────────┼─────────────┼───────────────┤
+│"Roberto Carlos"  │"rob_carlos" │38             │
+├──────────────────┼─────────────┼───────────────┤
+│"Yasmin Farias"   │"yas_farias" │33             │
+├──────────────────┼─────────────┼───────────────┤
+│"Natalia Costa"   │"nat_costa"  │33             │
+├──────────────────┼─────────────┼───────────────┤
+│"Camila Torres"   │"cami_torres"│31             │
+├──────────────────┼─────────────┼───────────────┤
+│"Xavier Costa"    │"xavier_c"   │30             │
+├──────────────────┼─────────────┼───────────────┤
+│"Diana Santos"    │"diana_s"    │29             │
+├──────────────────┼─────────────┼───────────────┤
+│"Isabela Moreira" │"isa_moreira"│22             │
+├──────────────────┼─────────────┼───────────────┤
+│"Fernanda Rocha"  │"fer_rocha"  │18             │
+├──────────────────┼─────────────┼───────────────┤
+│"Larissa Oliveira"│"lari_oli"   │17             │
+└──────────────────┴─────────────┴───────────────┘
+
+// 4 - Posts Mais Populares
+MATCH (p:Post)<-[:CURTIU]-(usuario)
+MATCH (autor:Usuario)-[:POSTOU]->(p)
+RETURN autor.username,
+       p.conteudo,
+       count(usuario) AS totalCurtidas,
+       p.data
+ORDER BY totalCurtidas DESC
+LIMIT 10;
+Resposta:
+╒══════════════╤══════════════════════════════╤═════════════╤════════════════════╕
+│autor.username│p.conteudo                    │totalCurtidas│p.data              │
+╞══════════════╪══════════════════════════════╪═════════════╪════════════════════╡
+│"xavier_c"    │"Tecnologia está mudando tudo"│9            │2024-01-12T08:15:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"rob_carlos"  │"Política e sociedade"        │9            │2024-01-11T10:15:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"diana_s"     │"Viagem incrível para a praia"│8            │2024-01-14T18:20:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"yas_farias"  │"Lifestyle saudável"          │8            │2024-01-10T07:30:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"amanda_r"    │"Fashion week foi incrível"   │7            │2024-01-15T15:30:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"nat_costa"   │"Dicas de moda para o verão"  │7            │2024-01-14T13:45:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"xavier_c"    │"IA e o futuro do trabalho"   │6            │2024-01-13T08:35:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"nat_costa"   │"Moda sustentável é o futuro" │6            │2024-01-11T09:20:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"fer_rocha"   │"Meu novo projeto está no ar!"│6            │2024-01-12T14:30:00Z│
+├──────────────┼──────────────────────────────┼─────────────┼────────────────────┤
+│"ursula_f"    │"Empreendedorismo em SP"      │6            │2024-01-10T09:45:00Z│
+└──────────────┴──────────────────────────────┴─────────────┴────────────────────┘
+
+// 5 - Sugestões de Amizade (Amigos de Amigos)
+MATCH (eu:Usuario {username: 'ana_silva'})-[:AMIGO_DE]->(amigo)-[:AMIGO_DE]->(sugestao)
+WHERE NOT (eu)-[:AMIGO_DE]-(sugestao) AND eu <> sugestao
+RETURN sugestao.nome,
+       sugestao.username,
+       count(DISTINCT amigo) AS amigosEmComum
+ORDER BY amigosEmComum DESC
+LIMIT 5;
+Resposta:
+╒══════════════════╤═════════════════╤═════════════╕
+│sugestao.nome     │sugestao.username│amigosEmComum│
+╞══════════════════╪═════════════════╪═════════════╡
+│"Ursula Fernandes"│"ursula_f"       │2            │
+├──────────────────┼─────────────────┼─────────────┤
+│"Elisa Campos"    │"elisa_c"        │2            │
+├──────────────────┼─────────────────┼─────────────┤
+│"Diana Santos"    │"diana_s"        │2            │
+├──────────────────┼─────────────────┼─────────────┤
+│"Igor Ferreira"   │"igor_f"         │2            │
+├──────────────────┼─────────────────┼─────────────┤
+│"Marcos Pereira"  │"marcos_p"       │1            │
+└──────────────────┴─────────────────┴─────────────┘
+
+// 6 - Hashtags Mais Usadas
+MATCH (h:Hashtag)<-[:TEM_TAG]-(p:Post)
+RETURN h.nome AS hashtag,
+       count(p) AS totalPosts
+ORDER BY totalPosts DESC
+LIMIT 10;
+Resposta:
+╒═══════════════╤══════════╕
+│hashtag        │totalPosts│
+╞═══════════════╪══════════╡
+│"brasilia"     │6         │
+├───────────────┼──────────┤
+│"politica"     │5         │
+├───────────────┼──────────┤
+│"moda"         │5         │
+├───────────────┼──────────┤
+│"portoalegre"  │5         │
+├───────────────┼──────────┤
+│"gastronomia"  │5         │
+├───────────────┼──────────┤
+│"curitiba"     │5         │
+├───────────────┼──────────┤
+│"recife"       │5         │
+├───────────────┼──────────┤
+│"fotografia"   │5         │
+├───────────────┼──────────┤
+│"praia"        │5         │
+├───────────────┼──────────┤
+│"belohorizonte"│5         │
+└───────────────┴──────────┘
+
+// 7 Usuários que Seguem Mas Não São Seguidos de Volta
+MATCH (u1:Usuario)-[:SEGUE]->(u2:Usuario)
+WHERE NOT (u2)-[:SEGUE]->(u1)
+RETURN u1.username AS seguidor,
+       u2.username AS seguido
+LIMIT 10;
+Resposta:
+╒═════════════╤═══════════╕
+│seguidor     │seguido    │
+╞═════════════╪═══════════╡
+│"carlos_m"   │"ana_silva"│
+├─────────────┼───────────┤
+│"gab_souza"  │"ana_silva"│
+├─────────────┼───────────┤
+│"igor_f"     │"ana_silva"│
+├─────────────┼───────────┤
+│"julia_alves"│"ana_silva"│
+├─────────────┼───────────┤
+│"marcos_p"   │"ana_silva"│
+├─────────────┼───────────┤
+│"otavio_r"   │"ana_silva"│
+├─────────────┼───────────┤
+│"rafa_barb"  │"ana_silva"│
+├─────────────┼───────────┤
+│"sab_martins"│"ana_silva"│
+├─────────────┼───────────┤
+│"thi_souza"  │"ana_silva"│
+├─────────────┼───────────┤
+│"ursula_f"   │"ana_silva"│
+└─────────────┴───────────┘
+
+
 
