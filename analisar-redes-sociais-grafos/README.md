@@ -66,8 +66,51 @@ Para que seu projeto seja notado e considerado "Nota 10", o time de especialista
 
 •	**Queries de Negócio e Evidências Visuais**: Mostre que seu modelo funciona na prática! Liste as perguntas de negócio que seu grafo responde e adicione "prints" das visualizações geradas (você pode usar o Neo4j Browser, Bloom ou Explore) para comprovar os insights.
 
+### Informações adicionais do Instrutor sobre o Desafio
 
+**Contexto do Problema**  
+Uma startup de análise de mídias sociais está desenvolvendo um produto para gerar *insights* sobre engajamento e conexões entre usuários em plataformas digitais. O objetivo é criar um protótipo funcional capaz de responder perguntas complexas sobre interações, popularidade de conteúdos e formação de comunidades.
 
+**Desafio Técnico**  
+Com base nos conceitos de modelagem de grafos estudados, projete, implemente e consulte um banco de dados Neo4j que represente uma rede social realista. O modelo deve ser otimizado para responder eficientemente às perguntas de negócio — não apenas armazenar dados.
+
+**Princípio Fundamental: Modelagem Orientada a Perguntas**  
+Seu grafo deve ser construído *a partir das perguntas que precisa responder*. Cada query define quais *nodes* e *relationships* são essenciais:
+
+| Pergunta de Negócio                          | Elementos do Modelo Necessários                     |
+|---------------------------------------------|-----------------------------------------------------|
+| "Quem recomendar para seguir?"              | `(:Usuario)-[:SEGUE]->(:Usuario)`, análise de amigos em comum |
+| "Qual post foi mais engajado no último mês?"| `(:Post {data, curtidas})`, `(:Usuario)-[:CURTIU {data}]->(:Post)` |
+| "Qual a menor distância entre dois usuários?"| `shortestPath((u1)-[:AMIGO_DE*]-(u2))`            |
+| "Quais comunidades existem na rede?"        | Algoritmos GDS (Louvain) sobre relacionamentos      |
+
+**Elementos-Chave do Modelo Sugerido**
+- **Nodes**: `Usuario`, `Post`, `Comentario`, `Hashtag`, `Grupo`, `Categoria`
+- **Relationships**:
+  - `(:Usuario)-[:SEGUE]->(:Usuario)`
+  - `(:Usuario)-[:AMIGO_DE {desde:date}]->(:Usuario)`
+  - `(:Usuario)-[:POSTOU {data:datetime}]->(:Post)`
+  - `(:Usuario)-[:CURTIU {data:datetime}]->(:Post)`
+  - `(:Post)-[:TEM_TAG]->(:Hashtag)`
+  - `(:Usuario)-[:MEMBRO_DE {cargo:string}]->(:Grupo)`
+
+**Diretrizes para Implementação**
+1. **Comece pelas queries**: Liste perguntas críticas antes de modelar.
+2. **Priorize relacionamentos explícitos**: Evite propriedades como `usuario.seguidores`; prefira `(:Usuario)-[:SEGUE]->(:Usuario)`.
+3. **Use dados realistas**: Gere um dataset fictício com 50–100 usuários, 100+ posts e relacionamentos variados (amizades, curtidas, grupos).
+4. **Valide com Cypher**: Após a importação, execute queries de exemplo para confirmar que o modelo responde às perguntas originais.
+5. **Otimize com índices**: Crie índices nas propriedades usadas em filtros (`username`, `data`, `categoria`).
+
+**Exemplo de Validação**
+```cypher
+// Recomendação de usuários baseada em amigos em comum
+MATCH (eu:Usuario {id: 1})-[:AMIGO_DE]->()-[:AMIGO_DE]->(sugestao)
+WHERE NOT (eu)-[:AMIGO_DE|:SEGUE]-(sugestao) AND eu <> sugestao
+RETURN sugestao.nome, count(*) AS conexoesEmComum
+ORDER BY conexoesEmComum DESC LIMIT 5;
+```
+
+Este desafio reforça um princípio central do Neo4j: **o poder do grafo está na modelagem adequada aos padrões de consulta**, não na complexidade dos dados em si. Um modelo simples, mas alinhado às perguntas de negócio, supera modelos densos mal estruturados.
 
 ---
 
