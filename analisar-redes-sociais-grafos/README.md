@@ -189,9 +189,9 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 |---------------|------------|
 | [Usuários](usuarios.csv)      | 50         |
 | [Posts](posts.csv)         | 100        |
-| [Hashtags](hashtags.csv)      | ~50        |
+| [Hashtags](hashtags.csv)      | ~200        |
 | [Amizades](amizades.csv)      | ~100       |
-| [Seguindo](seguindo.csv)      | ~300       |
+| [Seguindo](seguindo.csv)      | ~600       |
 | [Curtidas](curtidas.csv)      | ~400       |
 | [Comentários](comentarios.csv)      | ~100       |
 | Grupos        | 10         |
