@@ -275,12 +275,13 @@ dbms.security.allow_csv_import_from_file_urls=true
    - macOS: `~/Library/Application Support/Neo4j Desktop/relate-data/dbmss/{dbms-id}/import/`
    - Linux: `~/.config/Neo4j Desktop/relate-data/dbmss/{dbms-id}/import/`
 2. Salve os seguintes arquivos CSV nesta pasta:
-   - `usuarios.csv`
-   - `amizades.csv`
-   - `seguindo.csv`
-   - `posts.csv`
-   - `curtidas.csv`
-   - `hashtags.csv`
+   - [Usuários](usuarios.csv)
+   - [Amizades](amizades.csv)
+   - [Seguindo](seguindo.csv)
+   - [Posts](posts.csv)
+   - [Curtidas](curtidas.csv)
+   - [Hashtags](hashtags.csv)
+   - [Comentários](comentarios.csv)
 
 > 💡 **Dica**: Para encontrar o diretório facilmente, clique nos 3 pontos do banco → "Open Folder" → "Import"
 
