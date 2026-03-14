@@ -1,7 +1,10 @@
-```markdown
-# Rede Social com Neo4j - Análise de Dados com Grafos
 
-📋 **Índice**
+---
+
+## Rede Social com Neo4j - Análise de Dados com Grafos
+
+### 📋 **Índice**
+
 1. [Contexto do Problema](#contexto-do-problema)
 2. [Por Que Grafos?](#por-que-grafos)
 3. [Arquitetura do Grafo](#arquitetura-do-grafo)
@@ -37,6 +40,7 @@ Em um banco de dados relacional (SQL), essas consultas se tornam:
 ❌ **Pouco Intuitivas**: SQL não expressa naturalmente relacionamentos
 
 **Exemplo de Query SQL para "amigos de amigos"**:
+
 ```sql
 SELECT DISTINCT u3.*
 FROM usuarios u1
