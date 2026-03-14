@@ -193,7 +193,7 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 | [Amizades](amizades.csv)      | ~100       |
 | [Seguindo](seguindo.csv)      | ~300       |
 | [Curtidas](curtidas.csv)      | ~400       |
-| [Comentários](comentarios.csv)      | ~400       |
+| [Comentários](comentarios.csv)      | ~100       |
 | Grupos        | 10         |
 | Categorias    | 9          |
 
