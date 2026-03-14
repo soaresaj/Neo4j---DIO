@@ -55,6 +55,20 @@ WHERE u1.id = 1
   );
 ```
 
+### O que não pode faltar no seu Repositório Neo4j!
+Para que seu projeto seja notado e considerado "Nota 10", o time de especialistas da Neo4j recomenda que você estruture seu repositório com os seguintes itens:
+
+•	**README Estruturado**: Dedique um tempo à documentação. Explique o contexto do problema, justifique a escolha por grafos e deixe instruções claras de execução. ***Dica de ouro***: documente as dificuldades que encontrou (troubleshooting) e como as resolveu. O mercado valoriza profissionais que mostram suas "cicatrizes" de projetos reais!
+
+•	**Modelo do Grafo**: Inclua imagens claras do seu esquema (labels, relacionamentos e propriedades). Você pode desenhar a modelagem usando a ferramenta Arrows.app ou rodar o comando CALL db.schema.visualization() no próprio Neo4j para exportar o visual.
+
+•	**Dataset e Scripts de Carga**: Disponibilize uma amostra dos dados utilizados e inclua as suas queries Cypher comentadas (ex: usando o LOAD CSV).
+
+•	**Queries de Negócio e Evidências Visuais**: Mostre que seu modelo funciona na prática! Liste as perguntas de negócio que seu grafo responde e adicione "prints" das visualizações geradas (você pode usar o Neo4j Browser, Bloom ou Explore) para comprovar os insights.
+
+
+
+
 ---
 
 ## 🚀 Por Que Grafos?
