@@ -595,3 +595,130 @@ Resposta:
 ├──────────┼────────────────┼─────────────────────────────────────────────────────────────────┤
 │"Positivo"│6               │["diana_s", "diana_s", "fer_rocha", "fer_rocha", "nat_costa"]    │
 └──────────┴────────────────┴─────────────────────────────────────────────────────────────────┘
+
+// 21 Usuários que Administram Múltiplos Grupos
+MATCH (u:Usuario)-[:ADMINISTRA]->(g:Grupo)
+WITH u, count(g) AS totalGrupos, collect(g.nome) AS grupos
+WHERE totalGrupos > 1
+RETURN u.username AS usuario,
+       u.nome AS nome,
+       totalGrupos,
+       grupos
+ORDER BY totalGrupos DESC;
+Resposta:
+╒═══════════╤═══════════════╤═══════════╤══════════════════════════════════════════════════╕
+│usuario    │nome           │totalGrupos│grupos                                            │
+╞═══════════╪═══════════════╪═══════════╪══════════════════════════════════════════════════╡
+│"ana_silva"│"Ana Silva"    │2          │["Desenvolvedores São Paulo", "São Paulo Insider"]│
+├───────────┼───────────────┼───────────┼──────────────────────────────────────────────────┤
+│"gab_souza"│"Gabriel Souza"│2          │["Fitness e Bem-estar", "Música Brasileira"]      │
+├───────────┼───────────────┼───────────┼──────────────────────────────────────────────────┤
+│"diana_s"  │"Diana Santos" │2          │["Viajantes do Brasil", "Receitas e Culinária"]   │
+└───────────┴───────────────┴───────────┴──────────────────────────────────────────────────┘
+
+// 22 Grupos Sem Moderadores (Apenas Fundador)
+MATCH (g:Grupo)
+OPTIONAL MATCH (g)<-[a:ADMINISTRA {cargo: 'moderador'}]-()
+WITH g, count(a) AS moderadores
+WHERE moderadores = 0
+MATCH (g)<-[admin:ADMINISTRA {cargo: 'fundador'}]-(fundador:Usuario)
+RETURN g.nome AS grupo,
+       fundador.username AS apenasFoundador,
+       'Precisa de moderadores' AS status;
+Resposta:
+╒═══════════════════════════╤═══════════════╤════════════════════════╕
+│grupo                      │apenasFoundador│status                  │
+╞═══════════════════════════╪═══════════════╪════════════════════════╡
+│"Desenvolvedores São Paulo"│"ana_silva"    │"Precisa de moderadores"│
+└───────────────────────────┴───────────────┴────────────────────────┘
+
+// 23 Atividade dos Administradores (Posts e Comentários)
+MATCH (u:Usuario)-[:ADMINISTRA]->(g:Grupo)
+OPTIONAL MATCH (u)-[:POSTOU]->(p:Post)-[:PUBLICADO_EM]->(g)
+OPTIONAL MATCH (u)-[:COMENTOU]->(c:Comentario)-[:EM_POST]->(:Post)-[:PUBLICADO_EM]->(g)
+RETURN u.username AS admin,
+       g.nome AS grupo,
+       count(DISTINCT p) AS postsNoGrupo,
+       count(DISTINCT c) AS comentariosNoGrupo,
+       (count(DISTINCT p) + count(DISTINCT c)) AS atividadeTotal
+ORDER BY atividadeTotal DESC;
+Resposta:
+╒═════════════╤════════════════════════════════╤════════════╤══════════════════╤══════════════╕
+│admin        │grupo                           │postsNoGrupo│comentariosNoGrupo│atividadeTotal│
+╞═════════════╪════════════════════════════════╪════════════╪══════════════════╪══════════════╡
+│"nat_costa"  │"Moda e Estilo"                 │3           │4                 │7             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"rob_carlos" │"Debate Político Construtivo"   │4           │3                 │7             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"xavier_c"   │"Inteligência Artificial Brasil"│3           │3                 │6             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"cami_torres"│"Fotógrafos do Brasil"          │4           │1                 │5             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"gab_souza"  │"Música Brasileira"             │2           │3                 │5             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"bruno_costa"│"Fitness e Bem-estar"           │2           │2                 │4             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"amanda_r"   │"Moda e Estilo"                 │2           │2                 │4             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"pedro_h"    │"Inteligência Artificial Brasil"│0           │3                 │3             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"diana_s"    │"Viajantes do Brasil"           │2           │1                 │3             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"helena_m"   │"Debate Político Construtivo"   │0           │3                 │3             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"ana_silva"  │"Desenvolvedores São Paulo"     │0           │2                 │2             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"julia_alves"│"Viajantes do Brasil"           │1           │1                 │2             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"diana_s"    │"Receitas e Culinária"          │1           │1                 │2             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"vini_dias"  │"Música Brasileira"             │0           │2                 │2             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"ursula_f"   │"São Paulo Insider"             │1           │1                 │2             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"gab_souza"  │"Fitness e Bem-estar"           │0           │1                 │1             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"fer_rocha"  │"Receitas e Culinária"          │0           │1                 │1             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"marcos_p"   │"Fotógrafos do Brasil"          │0           │0                 │0             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"ana_silva"  │"São Paulo Insider"             │0           │0                 │0             │
+├─────────────┼────────────────────────────────┼────────────┼──────────────────┼──────────────┤
+│"lari_oli"   │"São Paulo Insider"             │0           │0                 │0             │
+└─────────────┴────────────────────────────────┴────────────┴──────────────────┴──────────────┘
+
+// 24 Estatísticas Gerais de Administração
+MATCH (g:Grupo)
+OPTIONAL MATCH (g)<-[a:ADMINISTRA]-(admin:Usuario)
+OPTIONAL MATCH (g)<-[:MEMBRO_DE]-(membro:Usuario)
+RETURN g.nome AS grupo,
+       count(DISTINCT admin) AS totalAdmins,
+       count(DISTINCT CASE WHEN a.cargo = 'fundador' THEN admin END) AS fundadores,
+       count(DISTINCT CASE WHEN a.cargo = 'moderador' THEN admin END) AS moderadores,
+       count(DISTINCT membro) AS totalMembros,
+       round(toFloat(count(DISTINCT admin)) / count(DISTINCT membro) * 100, 2) AS percentualAdmins
+ORDER BY g.nome;
+Resposta:
+╒════════════════════════════════╤═══════════╤══════════╤═══════════╤════════════╤════════════════╕
+│grupo                           │totalAdmins│fundadores│moderadores│totalMembros│percentualAdmins│
+╞════════════════════════════════╪═══════════╪══════════╪═══════════╪════════════╪════════════════╡
+│"Debate Político Construtivo"   │2          │1         │1          │10          │20.0            │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Desenvolvedores São Paulo"     │1          │1         │0          │14          │7.14            │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Fitness e Bem-estar"           │2          │1         │1          │9           │22.22           │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Fotógrafos do Brasil"          │2          │1         │1          │10          │20.0            │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Inteligência Artificial Brasil"│2          │1         │1          │9           │22.22           │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Moda e Estilo"                 │2          │1         │1          │11          │18.18           │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Música Brasileira"             │2          │1         │1          │10          │20.0            │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Receitas e Culinária"          │2          │1         │1          │13          │15.38           │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"São Paulo Insider"             │3          │1         │2          │15          │20.0            │
+├────────────────────────────────┼───────────┼──────────┼───────────┼────────────┼────────────────┤
+│"Viajantes do Brasil"           │2          │1         │1          │12          │16.67           │
+└────────────────────────────────┴───────────┴──────────┴───────────┴────────────┴────────────────┘
