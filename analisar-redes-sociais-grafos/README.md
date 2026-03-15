@@ -1215,6 +1215,15 @@ ORDER BY tipo;
 **Imagem do Grafo no Neo4j:**
 
 ![Grafo de Redes Sociais no Neo4j](Neo4j_visualisation.png)
+
+**Cypher de Criação do Grafo no Neo4j:**
+
+[**Criar Grafo**](Redes_Sociais_Grafo_CRIAR)
+
+**Cypher com Consultas e Estatísticas do Grafo no Neo4j:**
+
+[**Consultar Grafo**](Redes_Sociais_Grafo_CONSULTAR)
+
 ---
 
 ## 🔍 Consultas de Exemplo
