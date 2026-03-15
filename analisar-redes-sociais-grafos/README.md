@@ -183,6 +183,10 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 (:Usuario)-[:PERTENCE_A_COMUNIDADE]->(:Comunidade)
 ```
 
+**MODELO NO ARROWS.APP:**
+
+
+
 ### Estatísticas do Dataset
 
 | Tipo          | Quantidade |
@@ -293,11 +297,11 @@ dbms.security.allow_csv_import_from_file_urls=true
 
 // Constraints de unicidade
 CREATE CONSTRAINT usuario_id_unique FOR (u:Usuario) REQUIRE u.id IS UNIQUE;
-CREATE CONSTRAINT usuario_email_unique FOR (u:Usuario) REQUIRE u.email IS UNIQUE;
 CREATE CONSTRAINT post_id_unique FOR (p:Post) REQUIRE p.id IS UNIQUE;
 CREATE CONSTRAINT hashtag_nome_unique FOR (h:Hashtag) REQUIRE h.nome IS UNIQUE;
 CREATE CONSTRAINT grupo_id_unique FOR (g:Grupo) REQUIRE g.id IS UNIQUE;
 CREATE CONSTRAINT categoria_nome_unique FOR (c:Categoria) REQUIRE c.nome IS UNIQUE;
+CREATE CONSTRAINT comentario_id_unique FOR (c:Comentario) REQUIRE c.id IS UNIQUE;
 
 // ========================================================
 // CRIAR ÍNDICES PARA PERFORMANCE
@@ -306,7 +310,7 @@ CREATE CONSTRAINT categoria_nome_unique FOR (c:Categoria) REQUIRE c.nome IS UNIQ
 // Índices em usuários
 CREATE INDEX usuario_username FOR (u:Usuario) ON (u.username);
 CREATE INDEX usuario_cidade FOR (u:Usuario) ON (u.cidade);
-CREATE INDEX usuario_idade FOR (u:Usuario) ON (u.idade);
+CREATE INDEX post_data FOR (p:Post) ON (p.data);
 
 // Índices em posts
 CREATE INDEX post_data FOR (p:Post) ON (p.data);
@@ -318,7 +322,14 @@ CREATE INDEX amigo_desde FOR ()-[a:AMIGO_DE]-() ON (a.desde);
 
 // Índices em grupos
 CREATE INDEX grupo_nome FOR (g:Grupo) ON (g.nome);
+CREATE INDEX grupo_categoria FOR (g:Grupo) ON (g.categoria);
+
+// Índices em categoria
 CREATE INDEX categoria_tipo FOR (c:Categoria) ON (c.tipo);
+
+// Índices em comentários
+CREATE INDEX comentario_data FOR (c:Comentario) ON (c.data);
+CREATE INDEX comentario_curtidas FOR (c:Comentario) ON (c.curtidas);
 ```
 
 ### Passo 3: Importar Usuários
