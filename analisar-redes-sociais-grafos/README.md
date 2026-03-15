@@ -341,6 +341,9 @@ CREATE INDEX categoria_tipo FOR (c:Categoria) ON (c.tipo);
 // Índices em comentários
 CREATE INDEX comentario_data FOR (c:Comentario) ON (c.data);
 CREATE INDEX comentario_curtidas FOR (c:Comentario) ON (c.curtidas);
+
+// Índices em relacionamento administra
+CREATE INDEX admin_desde FOR ()-[a:ADMINISTRA]-() ON (a.desde);
 ```
 
 ### Passo 3: Importar Usuários
