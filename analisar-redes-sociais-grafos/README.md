@@ -349,7 +349,7 @@ CREATE INDEX comentario_curtidas FOR (c:Comentario) ON (c.curtidas);
 // IMPORTAR USUÁRIOS
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///usuarios.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/usuarios.csv' AS row
 CREATE (u:Usuario {
   id: toInteger(row.id),
   nome: row.nome,
@@ -371,7 +371,7 @@ RETURN count(u) AS totalUsuarios;
 // IMPORTAR POSTS
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///posts.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/posts.csv' AS row
 MATCH (u:Usuario {id: toInteger(row.usuario_id)})
 CREATE (p:Post {
   id: toInteger(row.id),
@@ -393,7 +393,7 @@ RETURN count(p) AS totalPosts;
 // IMPORTAR AMIZADES (BIDIRECIONAL)
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///amizades.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/amizades.csv' AS row
 MATCH (u1:Usuario {id: toInteger(row.usuario_id)})
 MATCH (u2:Usuario {id: toInteger(row.amigo_id)})
 MERGE (u1)-[:AMIGO_DE {desde: date(row.desde)}]->(u2)
@@ -411,7 +411,7 @@ RETURN count(a) AS totalAmizades;
 // IMPORTAR SEGUINDO
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///seguindo.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/seguindo.csv' AS row
 MATCH (seguidor:Usuario {id: toInteger(row.seguidor_id)})
 MATCH (seguido:Usuario {id: toInteger(row.seguido_id)})
 MERGE (seguidor)-[:SEGUE]->(seguido);
@@ -428,7 +428,7 @@ RETURN count(s) AS totalSeguindo;
 // IMPORTAR CURTIDAS
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///curtidas.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/curtidas.csv' AS row
 MATCH (u:Usuario {id: toInteger(row.usuario_id)})
 MATCH (p:Post {id: toInteger(row.post_id)})
 MERGE (u)-[:CURTIU {data: datetime(row.data)}]->(p);
@@ -445,7 +445,7 @@ RETURN count(c) AS totalCurtidas;
 // IMPORTAR HASHTAGS
 // ========================================================
 
-LOAD CSV WITH HEADERS FROM 'file:///hashtags.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/hashtags.csv' AS row
 MATCH (p:Post {id: toInteger(row.post_id)})
 MERGE (h:Hashtag {nome: toLower(row.hashtag)})
 MERGE (p)-[:TEM_TAG]->(h);
@@ -462,45 +462,228 @@ RETURN count(h) AS totalHashtags;
 // CRIAR CATEGORIAS
 // ========================================================
 
-CREATE (c1:Categoria {nome: 'Tecnologia', descricao: 'Grupos de tecnologia e programação', icone: '💻', cor: '#3498db'})
-CREATE (c2:Categoria {nome: 'Arte', descricao: 'Grupos de fotografia e design', icone: '🎨', cor: '#e74c3c'})
-CREATE (c3:Categoria {nome: 'Saúde', descricao: 'Grupos de fitness e bem-estar', icone: '💪', cor: '#2ecc71'})
-CREATE (c4:Categoria {nome: 'Viagem', descricao: 'Grupos de viajantes', icone: '✈️', cor: '#f39c12'})
-CREATE (c5:Categoria {nome: 'Moda', descricao: 'Grupos de moda e estilo', icone: '👗', cor: '#9b59b6'})
-CREATE (c6:Categoria {nome: 'Política', descricao: 'Grupos de debate político', icone: '🏛️', cor: '#34495e'})
-CREATE (c7:Categoria {nome: 'Gastronomia', descricao: 'Grupos de culinária', icone: '🍳', cor: '#e67e22'})
-CREATE (c8:Categoria {nome: 'Música', descricao: 'Grupos de música', icone: '🎵', cor: '#1abc9c'})
-CREATE (c9:Categoria {nome: 'Regional', descricao: 'Grupos regionais', icone: '📍', cor: '#95a5a6'});
+CREATE (c1:Categoria {
+  nome: 'Tecnologia',
+  descricao: 'Grupos relacionados a tecnologia, programação e inovação',
+  icone: '💻',
+  caption: '💻',
+  cor: '#3498db'
+})
 
+CREATE (c2:Categoria {
+  nome: 'Arte',
+  descricao: 'Grupos de fotografia, design, arte visual e criatividade',
+  icone: '🎨',
+  caption: '🎨',
+  cor: '#e74c3c'
+})
+
+CREATE (c3:Categoria {
+  nome: 'Saúde',
+  descricao: 'Grupos de fitness, bem-estar e vida saudável',
+  icone: '💪',
+  caption: '💪',
+  cor: '#2ecc71'
+})
+
+CREATE (c4:Categoria {
+  nome: 'Viagem',
+  descricao: 'Grupos de viajantes e exploradores',
+  icone: '✈️',
+  caption: '✈️',
+  cor: '#f39c12'
+})
+
+CREATE (c5:Categoria {
+  nome: 'Moda',
+  descricao: 'Grupos de moda, estilo e tendências',
+  icone: '👗',
+  caption: '👗',
+  cor: '#9b59b6'
+})
+
+CREATE (c6:Categoria {
+  nome: 'Política',
+  descricao: 'Grupos de debate político e sociedade',
+  icone: '🏛️',
+  caption: '🏛️',
+  cor: '#34495e'
+})
+
+CREATE (c7:Categoria {
+  nome: 'Gastronomia',
+  descricao: 'Grupos de culinária, receitas e restaurantes',
+  icone: '🍳',
+  caption: '🍳',
+  cor: '#e67e22'
+})
+
+CREATE (c8:Categoria {
+  nome: 'Música',
+  descricao: 'Grupos de música, artistas e playlists',
+  icone: '🎵',
+  caption: '🎵',
+  cor: '#1abc9c'
+})
+
+CREATE (c9:Categoria {
+  nome: 'Regional',
+  descricao: 'Grupos focados em regiões e cidades específicas',
+  icone: '📍',
+  caption: '📍',
+  cor: '#95a5a6'
+});
+```
+
+```cypher
 // ========================================================
 // CRIAR GRUPOS
 // ========================================================
 
-CREATE (g1:Grupo {id: 'grp001', nome: 'Desenvolvedores São Paulo', descricao: 'Comunidade de programadores de SP', privado: false, dataCriacao: date('2022-05-15'), membrosCount: 0})
-CREATE (g2:Grupo {id: 'grp002', nome: 'Inteligência Artificial Brasil', descricao: 'Discussões sobre IA e ML', privado: false, dataCriacao: date('2021-08-20'), membrosCount: 0})
-CREATE (g3:Grupo {id: 'grp003', nome: 'Fotógrafos do Brasil', descricao: 'Compartilhe fotos e técnicas', privado: false, dataCriacao: date('2020-11-10'), membrosCount: 0})
-CREATE (g4:Grupo {id: 'grp004', nome: 'Fitness e Bem-estar', descricao: 'Dicas de treino e nutrição', privado: false, dataCriacao: date('2022-01-05'), membrosCount: 0})
-CREATE (g5:Grupo {id: 'grp005', nome: 'Viajantes do Brasil', descricao: 'Experiências de viagem', privado: false, dataCriacao: date('2021-06-18'), membrosCount: 0})
-CREATE (g6:Grupo {id: 'grp006', nome: 'Moda e Estilo', descricao: 'Tendências e dicas de moda', privado: false, dataCriacao: date('2022-03-22'), membrosCount: 0})
-CREATE (g7:Grupo {id: 'grp007', nome: 'Debate Político Construtivo', descricao: 'Discussões políticas respeitosas', privado: true, dataCriacao: date('2021-09-30'), membrosCount: 0})
-CREATE (g8:Grupo {id: 'grp008', nome: 'Receitas e Culinária', descricao: 'Compartilhe receitas', privado: false, dataCriacao: date('2020-12-08'), membrosCount: 0})
-CREATE (g9:Grupo {id: 'grp009', nome: 'Música Brasileira', descricao: 'Descubra música brasileira', privado: false, dataCriacao: date('2021-07-14'), membrosCount: 0})
-CREATE (g10:Grupo {id: 'grp010', nome: 'São Paulo Insider', descricao: 'Tudo sobre São Paulo', privado: false, dataCriacao: date('2022-02-11'), membrosCount: 0});
+CREATE (g1:Grupo {
+  id: 'grp001',
+  nome: 'Desenvolvedores São Paulo',
+  descricao: 'Comunidade de programadores e desenvolvedores de SP',
+  privado: false,
+  dataCriacao: date('2022-05-15'),
+  caption: 'grp001',
+  membrosCount: 0
+})
 
+CREATE (g2:Grupo {
+  id: 'grp002',
+  nome: 'Inteligência Artificial Brasil',
+  descricao: 'Discussões sobre IA, Machine Learning e Data Science',
+  privado: false,
+  dataCriacao: date('2021-08-20'),
+  caption: 'grp002',
+  membrosCount: 0
+})
+
+CREATE (g3:Grupo {
+  id: 'grp003',
+  nome: 'Fotógrafos do Brasil',
+  descricao: 'Compartilhe suas melhores fotos e técnicas',
+  privado: false,
+  dataCriacao: date('2020-11-10'),
+  caption: 'grp003',
+  membrosCount: 0
+})
+
+CREATE (g4:Grupo {
+  id: 'grp004',
+  nome: 'Fitness e Bem-estar',
+  descricao: 'Dicas de treino, nutrição e vida saudável',
+  privado: false,
+  dataCriacao: date('2022-01-05'),
+  caption: 'grp004',
+  membrosCount: 0
+})
+
+CREATE (g5:Grupo {
+  id: 'grp005',
+  nome: 'Viajantes do Brasil',
+  descricao: 'Compartilhe experiências de viagem pelo Brasil',
+  privado: false,
+  dataCriacao: date('2021-06-18'),
+  caption: 'grp005',
+  membrosCount: 0
+})
+
+CREATE (g6:Grupo {
+  id: 'grp006',
+  nome: 'Moda e Estilo',
+  descricao: 'Tendências, looks e dicas de moda',
+  privado: false,
+  dataCriacao: date('2022-03-22'),
+  caption: 'grp006',
+  membrosCount: 0
+})
+
+CREATE (g7:Grupo {
+  id: 'grp007',
+  nome: 'Debate Político Construtivo',
+  descricao: 'Discussões políticas respeitosas e informadas',
+  privado: true,
+  dataCriacao: date('2021-09-30'),
+  caption: 'grp007',
+  membrosCount: 0
+})
+
+CREATE (g8:Grupo {
+  id: 'grp008',
+  nome: 'Receitas e Culinária',
+  descricao: 'Compartilhe receitas e dicas culinárias',
+  privado: false,
+  dataCriacao: date('2020-12-08'),
+  caption: 'grp009',
+  membrosCount: 0
+})
+
+CREATE (g9:Grupo {
+  id: 'grp009',
+  nome: 'Música Brasileira',
+  descricao: 'Descubra e compartilhe música brasileira',
+  privado: false,
+  dataCriacao: date('2021-07-14'),
+  caption: 'grp009',
+  membrosCount: 0
+})
+
+CREATE (g10:Grupo {
+  id: 'grp010',
+  nome: 'São Paulo Insider',
+  descricao: 'Tudo sobre São Paulo: eventos, lugares, dicas',
+  privado: false,
+  dataCriacao: date('2022-02-11'),
+  caption: 'grp010',
+  membrosCount: 0
+});
+```
+
+```cypher
 // ========================================================
 // RELACIONAR GRUPOS ÀS CATEGORIAS
 // ========================================================
 
-MATCH (g:Grupo {id: 'grp001'}), (c:Categoria {nome: 'Tecnologia'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp002'}), (c:Categoria {nome: 'Tecnologia'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp003'}), (c:Categoria {nome: 'Arte'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp004'}), (c:Categoria {nome: 'Saúde'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp005'}), (c:Categoria {nome: 'Viagem'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp006'}), (c:Categoria {nome: 'Moda'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp007'}), (c:Categoria {nome: 'Política'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp008'}), (c:Categoria {nome: 'Gastronomia'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp009'}), (c:Categoria {nome: 'Música'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
-MATCH (g:Grupo {id: 'grp010'}), (c:Categoria {nome: 'Regional'}) CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+// Tecnologia
+MATCH (g:Grupo {id: 'grp001'}), (c:Categoria {nome: 'Tecnologia'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+MATCH (g:Grupo {id: 'grp002'}), (c:Categoria {nome: 'Tecnologia'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Arte
+MATCH (g:Grupo {id: 'grp003'}), (c:Categoria {nome: 'Arte'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Saúde
+MATCH (g:Grupo {id: 'grp004'}), (c:Categoria {nome: 'Saúde'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Viagem
+MATCH (g:Grupo {id: 'grp005'}), (c:Categoria {nome: 'Viagem'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Moda
+MATCH (g:Grupo {id: 'grp006'}), (c:Categoria {nome: 'Moda'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Política
+MATCH (g:Grupo {id: 'grp007'}), (c:Categoria {nome: 'Política'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Gastronomia
+MATCH (g:Grupo {id: 'grp008'}), (c:Categoria {nome: 'Gastronomia'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Música
+MATCH (g:Grupo {id: 'grp009'}), (c:Categoria {nome: 'Música'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
+
+// Regional
+MATCH (g:Grupo {id: 'grp010'}), (c:Categoria {nome: 'Regional'})
+CREATE (g)-[:PERTENCE_A_CATEGORIA]->(c);
 ```
 
 ### Passo 10: Adicionar Membros aos Grupos
@@ -509,12 +692,90 @@ MATCH (g:Grupo {id: 'grp010'}), (c:Categoria {nome: 'Regional'}) CREATE (g)-[:PE
 // ADICIONAR MEMBROS AOS GRUPOS
 // ========================================================
 
-// Grupo: Desenvolvedores SP
+// Grupo: Desenvolvedores São Paulo (Tech)
 UNWIND [1, 6, 9, 12, 16, 20, 23, 26, 30, 34, 38, 41, 46, 49] AS userId
 MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp001'})
-MERGE (u)-[:MEMBRO_DE {cargo: CASE WHEN userId = 1 THEN 'admin' ELSE 'membro' END, desde: date('2022-05-15')}]->(g);
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 1 THEN 'admin' ELSE 'membro' END,
+  desde: date('2022-05-15') + duration({days: userId})
+}]->(g);
 
-// (Demais grupos seguem padrão similar - ver documento completo)
+// Grupo: IA Brasil
+UNWIND [6, 12, 23, 26, 34, 41, 43, 46, 49] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp002'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 23 THEN 'admin' ELSE 'membro' END,
+  desde: date('2021-08-20') + duration({days: userId})
+}]->(g);
+
+// Grupo: Fotógrafos do Brasil
+UNWIND [13, 28, 35, 39, 43, 44, 4, 14, 21, 23] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp003'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 28 THEN 'admin' ELSE 'membro' END,
+  desde: date('2020-11-10') + duration({days: userId})
+}]->(g);
+
+// Grupo: Fitness e Bem-estar
+UNWIND [2, 7, 9, 13, 16, 21, 37, 44, 49] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp004'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 2 THEN 'admin' ELSE 'membro' END,
+  desde: date('2022-01-05') + duration({days: userId})
+}]->(g);
+
+// Grupo: Viajantes do Brasil
+UNWIND [1, 3, 4, 10, 11, 15, 17, 19, 22, 25, 29, 48] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp005'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 4 THEN 'admin' ELSE 'membro' END,
+  desde: date('2021-06-18') + duration({days: userId})
+}]->(g);
+
+// Grupo: Moda e Estilo
+UNWIND [14, 26, 28, 34, 36, 41, 49, 4, 6, 12, 23] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp006'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 14 THEN 'admin' ELSE 'membro' END,
+  desde: date('2022-03-22') + duration({days: userId})
+}]->(g);
+
+// Grupo: Debate Político (privado)
+UNWIND [8, 18, 27, 32, 39, 43, 50, 1, 4, 14] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp007'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 43 THEN 'admin' ELSE 'membro' END,
+  desde: date('2021-09-30') + duration({days: userId})
+}]->(g);
+
+// Grupo: Receitas e Culinária
+UNWIND [1, 4, 6, 8, 11, 16, 24, 27, 30, 33, 34, 40, 47] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp008'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 6 THEN 'admin' ELSE 'membro' END,
+  desde: date('2020-12-08') + duration({days: userId})
+}]->(g);
+
+// Grupo: Música Brasileira
+UNWIND [7, 13, 21, 35, 44, 2, 11, 19, 24, 47] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp009'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 7 THEN 'admin' ELSE 'membro' END,
+  desde: date('2021-07-14') + duration({days: userId})
+}]->(g);
+
+// Grupo: São Paulo Insider
+UNWIND [1, 4, 6, 9, 12, 16, 20, 23, 26, 30, 34, 38, 41, 46, 49] AS userId
+MATCH (u:Usuario {id: userId}), (g:Grupo {id: 'grp010'})
+MERGE (u)-[:MEMBRO_DE {
+  cargo: CASE WHEN userId = 20 THEN 'admin' ELSE 'membro' END,
+  desde: date('2022-02-11') + duration({days: userId})
+}]->(g);
+
+// Atualizar o contador de usuários nos grupos temáticos
+MATCH (g:Grupo)<-[:MEMBRO_DE]-(u:Usuario)
+WITH g, count(u) AS total
+SET g.membrosCount = total;
 ```
 
 ### Passo 11: Relacionar Posts aos Grupos
@@ -523,14 +784,75 @@ MERGE (u)-[:MEMBRO_DE {cargo: CASE WHEN userId = 1 THEN 'admin' ELSE 'membro' EN
 // RELACIONAR POSTS AOS GRUPOS (BASEADO EM HASHTAGS)
 // ========================================================
 
-// Posts de tecnologia
+// Posts de tecnologia no grupo de Desenvolvedores
 MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
 WHERE h.nome IN ['tecnologia', 'tech', 'programacao', 'code', 'ia', 'blockchain', 'opensource']
 WITH p
 MATCH (g:Grupo {id: 'grp001'})
 MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
 
-// (Demais categorias seguem padrão similar - ver documento completo)
+// Posts de IA no grupo de IA
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['ia', 'tecnologia', 'blockchain']
+WITH p
+MATCH (g:Grupo {id: 'grp002'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de fotografia
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['fotografia', 'arte', 'ensaio', 'goldenhour', 'urbana']
+WITH p
+MATCH (g:Grupo {id: 'grp003'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de fitness
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['fitness', 'treino', 'saude']
+WITH p
+MATCH (g:Grupo {id: 'grp004'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de viagem
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['viagem', 'praia', 'ferias', 'nordeste']
+WITH p
+MATCH (g:Grupo {id: 'grp005'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de moda
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['moda', 'fashion', 'tendencias', 'desfile', 'sustentavel']
+WITH p
+MATCH (g:Grupo {id: 'grp006'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de política
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['politica', 'debate', 'sociedade', 'democracia', 'analise']
+WITH p
+MATCH (g:Grupo {id: 'grp007'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de gastronomia
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['gastronomia', 'receita', 'comida', 'cafe', 'brunch', 'gourmet']
+WITH p
+MATCH (g:Grupo {id: 'grp008'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts de música
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['musica', 'playlist', 'frevo', 'cultura']
+WITH p
+MATCH (g:Grupo {id: 'grp009'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
+
+// Posts sobre São Paulo
+MATCH (p:Post)-[:TEM_TAG]->(h:Hashtag)
+WHERE h.nome IN ['saopaulo', 'vida', 'empreendedorismo', 'negocios']
+WITH p
+MATCH (g:Grupo {id: 'grp010'})
+MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
 ```
 
 ### Passo 12: Verificação Final
@@ -851,5 +1173,5 @@ RETURN labels, relTypesCount, propertyKeyCount;
 ---
 
 > Desenvolvido com ❤️ usando Neo4j e Cypher  
-> Última atualização: 2024
+> Última atualização: Março de 2026
 ```
