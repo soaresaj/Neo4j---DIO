@@ -185,7 +185,9 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 
 **MODELO NO ARROWS.APP:**
 
+![Modelo Grafo Redes Sociais](redes_sociais.png)
 
+![Link para o grafo no Arrows](https://arrows.app/#/local/id=y2lZ_CkdSdmnt4b5Euzm)
 
 ### Estatísticas do Dataset
 
