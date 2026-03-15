@@ -189,6 +189,11 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 
 [**Link para o grafo no Arrows**](https://arrows.app/#/local/id=y2lZ_CkdSdmnt4b5Euzm)
 
+***Código Cypher gerado no Arrows:***
+```cypher
+CREATE (Post:p {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:EM_POST]-(n8:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:COMENTOU]-(n5:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo:g {id: "string", nome: "string", descricao: "string", privado: "boolean", dataCriacao: "datetime", caption: "string", membrosCount: "integer"})<-[:PUBLICADO_EM {data: "datetime"}]-(Post)<-[:CURTIU {data: "datetime"}]-(n0:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:SEGUE {``: ""}]->(n5)<-[:AMIGO_DE {desde: "datetime"}]-(n0)-[:POSTOU]->(Post)-[:TEM_TAG {nome: "string"}]->(:h {nome: "string"}),(n8)<-[:CURTIU {data: "datetime"}]-(n5)-[:CURTIU {data: "datetime"}]->(Post)<-[:POSTOU]-(n5)-[:CRIOU {data: "datetime"}]->(Grupo)-[:PERTENCE_A_CATEGORIA]->(:c {nome: "string", descricao: "string", icone: "imagem", caption: "imagem", cor: "string"}),(n0)-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo)<-[:CRIOU {data: "datetime"}]-(n0)-[:COMENTOU]->(n6:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:CURTIU {data: "datetime"}]-(n0),(n6)-[:EM_POST]->(Post)
+```
+
 ### Estatísticas do Dataset
 
 | Tipo          | Quantidade |
