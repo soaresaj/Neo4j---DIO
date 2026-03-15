@@ -533,6 +533,11 @@ CREATE (c9:Categoria {
   caption: '📍',
   cor: '#95a5a6'
 });
+
+// Verificar
+MATCH (c:Categoria)
+RETURN count(c) AS totalCategorias;
+// Deve retornar: 9
 ```
 
 ```cypher
@@ -639,6 +644,11 @@ CREATE (g10:Grupo {
   caption: 'grp010',
   membrosCount: 0
 });
+
+// Verificar
+MATCH (g:Grupo)
+RETURN count(g) AS totalGrupos;
+// Deve retornar: 10
 ```
 
 ```cypher
@@ -855,7 +865,307 @@ MATCH (g:Grupo {id: 'grp010'})
 MERGE (p)-[:PUBLICADO_EM {data: p.data}]->(g);
 ```
 
-### Passo 12: Verificação Final
+### Passo 12: Relacionar usuários como criadores
+```cypher
+// ========================================================
+// DEFINIR CRIADORES DOS GRUPOS TEMÁTICOS
+// ========================================================
+
+MATCH (u1:Usuario {id: 1}), (g1:Grupo {id: 'grp001'})
+CREATE (u1)-[:CRIOU {data: date('2022-05-15')}]->(g1);
+
+MATCH (u23:Usuario {id: 23}), (g2:Grupo {id: 'grp002'})
+CREATE (u23)-[:CRIOU {data: date('2021-08-20')}]->(g2);
+
+MATCH (u28:Usuario {id: 28}), (g3:Grupo {id: 'grp003'})
+CREATE (u28)-[:CRIOU {data: date('2020-11-10')}]->(g3);
+
+MATCH (u2:Usuario {id: 2}), (g4:Grupo {id: 'grp004'})
+CREATE (u2)-[:CRIOU {data: date('2022-01-05')}]->(g4);
+
+MATCH (u4:Usuario {id: 4}), (g5:Grupo {id: 'grp005'})
+CREATE (u4)-[:CRIOU {data: date('2021-06-18')}]->(g5);
+
+MATCH (u14:Usuario {id: 14}), (g6:Grupo {id: 'grp006'})
+CREATE (u14)-[:CRIOU {data: date('2022-03-22')}]->(g6);
+
+MATCH (u43:Usuario {id: 43}), (g7:Grupo {id: 'grp007'})
+CREATE (u43)-[:CRIOU {data: date('2021-09-30')}]->(g7);
+
+MATCH (u6:Usuario {id: 6}), (g8:Grupo {id: 'grp008'})
+CREATE (u6)-[:CRIOU {data: date('2020-12-08')}]->(g8);
+
+MATCH (u7:Usuario {id: 7}), (g9:Grupo {id: 'grp009'})
+CREATE (u7)-[:CRIOU {data: date('2021-07-14')}]->(g9);
+
+MATCH (u20:Usuario {id: 20}), (g10:Grupo {id: 'grp010'})
+CREATE (u20)-[:CRIOU {data: date('2022-02-11')}]->(g10);
+```
+
+### Passo 13: Importar comentários dos usuários sobre os posts
+```cypher
+// ========================================================
+// IMPORTAR COMENTÁRIOS DOS USUÁRIOS SOBRE OS POSTS
+// ========================================================
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/comentarios.csv' AS row
+MATCH (u:Usuario {id: toInteger(row.usuario_id)})
+MATCH (p:Post {id: toInteger(row.post_id)})
+CREATE (c:Comentario {
+  id: toInteger(row.id),
+  conteudo: row.conteudo,
+  curtidas: toInteger(row.curtidas),
+  data: datetime(row.data)
+})
+
+CREATE (u)-[:COMENTOU]->(c)
+CREATE (c)-[:EM_POST]->(p);
+
+// Verificar
+MATCH (c:Comentario)
+RETURN count(c) AS totalComentarios;
+// Deve retornar: 9
+```
+
+### Passo 14: Criar relacionamentos de respostas
+```cypher
+// ========================================================
+// CRIAR RELACIONAMENTOS DE RESPOSTA (THREADS)
+// ========================================================
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/soaresaj/Neo4j---DIO/refs/heads/main/analisar-redes-sociais-grafos/comentarios.csv' AS row
+WITH row
+WHERE row.responde_comentario_id IS NOT NULL AND row.responde_comentario_id <> ''
+MATCH (c1:Comentario {id: toInteger(row.id)})
+MATCH (c2:Comentario {id: toInteger(row.responde_comentario_id)})
+CREATE (c1)-[:RESPONDE_A]->(c2);
+```
+
+### Passo 15: Usuários curtindo comentários específicos nos posts
+```cypher
+// ========================================================
+// CRIAR CURTIDAS EM COMENTÁRIOS SOBRE POSTS
+// ========================================================
+
+UNWIND [
+  {usuario: 1, comentario: 3},
+  {usuario: 4, comentario: 3},
+  {usuario: 6, comentario: 3},
+  {usuario: 2, comentario: 9},
+  {usuario: 6, comentario: 9},
+  {usuario: 8, comentario: 9},
+  {usuario: 1, comentario: 13},
+  {usuario: 4, comentario: 13},
+  {usuario: 12, comentario: 13},
+  {usuario: 2, comentario: 23},
+  {usuario: 6, comentario: 23},
+  {usuario: 1, comentario: 28},
+  {usuario: 6, comentario: 28},
+  {usuario: 14, comentario: 28},
+  {usuario: 4, comentario: 37},
+  {usuario: 13, comentario: 37},
+  {usuario: 23, comentario: 37},
+  {usuario: 1, comentario: 53},
+  {usuario: 4, comentario: 53},
+  {usuario: 14, comentario: 53},
+  {usuario: 2, comentario: 57},
+  {usuario: 9, comentario: 57},
+  {usuario: 23, comentario: 57},
+  {usuario: 1, comentario: 62},
+  {usuario: 8, comentario: 62},
+  {usuario: 14, comentario: 62},
+  {usuario: 43, comentario: 62},
+  {usuario: 4, comentario: 78},
+  {usuario: 14, comentario: 78},
+  {usuario: 26, comentario: 78},
+  {usuario: 1, comentario: 90},
+  {usuario: 4, comentario: 90},
+  {usuario: 8, comentario: 90}
+] AS curtida
+MATCH (u:Usuario {id: curtida.usuario})
+MATCH (c:Comentario {id: curtida.comentario})
+MERGE (u)-[:CURTIU {data: datetime()}]->(c);
+```
+
+### Passo 16: Criar relacionamento de administração dos usuários nos grupos
+```cypher
+// ========================================================
+// CRIAR RELACIONAMENTOS DE ADMINISTRAÇÃO
+// ========================================================
+
+// Grupo 001: Desenvolvedores São Paulo
+// Administrador: ana_silva (id: 1)
+MATCH (u:Usuario {id: 1}), (g:Grupo {id: 'grp001'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-05-15'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+// Grupo 002: Inteligência Artificial Brasil
+// Administradores: usuario 23 (fundador) e usuario 41 (moderador)
+MATCH (u:Usuario {id: 23}), (g:Grupo {id: 'grp002'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-08-20'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 41}), (g:Grupo {id: 'grp002'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-03-10'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 003: Fotógrafos do Brasil
+// Administradores: usuario 28 (fundador) e usuario 13 (moderador)
+MATCH (u:Usuario {id: 28}), (g:Grupo {id: 'grp003'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2020-11-10'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 13}), (g:Grupo {id: 'grp003'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-05-22'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 004: Fitness e Bem-estar
+// Administradores: usuario 2 (fundador) e usuario 7 (moderador)
+MATCH (u:Usuario {id: 2}), (g:Grupo {id: 'grp004'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-01-05'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 7}), (g:Grupo {id: 'grp004'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-06-18'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 005: Viajantes do Brasil
+// Administradores: usuario 4 (fundador) e usuario 10 (moderador)
+MATCH (u:Usuario {id: 4}), (g:Grupo {id: 'grp005'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-06-18'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 10}), (g:Grupo {id: 'grp005'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-01-15'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 006: Moda e Estilo
+// Administradores: usuario 14 (fundador) e usuario 26 (moderador)
+MATCH (u:Usuario {id: 14}), (g:Grupo {id: 'grp006'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-03-22'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 26}), (g:Grupo {id: 'grp006'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-08-05'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 007: Debate Político Construtivo
+// Administradores: usuario 43 (fundador) e usuario 8 (moderador)
+MATCH (u:Usuario {id: 43}), (g:Grupo {id: 'grp007'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-09-30'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts', 'banir_usuarios']
+}]->(g);
+
+MATCH (u:Usuario {id: 8}), (g:Grupo {id: 'grp007'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-02-14'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts', 'advertir_usuarios']
+}]->(g);
+
+// Grupo 008: Receitas e Culinária
+// Administradores: usuario 6 (fundador) e usuario 4 (moderador)
+MATCH (u:Usuario {id: 6}), (g:Grupo {id: 'grp008'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2020-12-08'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 4}), (g:Grupo {id: 'grp008'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-07-20'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 009: Música Brasileira
+// Administradores: usuario 7 (fundador) e usuario 21 (moderador)
+MATCH (u:Usuario {id: 7}), (g:Grupo {id: 'grp009'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2021-07-14'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 21}), (g:Grupo {id: 'grp009'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-04-08'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+// Grupo 010: São Paulo Insider
+// Administradores: usuario 20 (fundador), usuario 1 (moderador) e usuario 12 (moderador)
+MATCH (u:Usuario {id: 20}), (g:Grupo {id: 'grp010'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-02-11'),
+  cargo: 'fundador',
+  permissoes: ['aprovar_posts', 'adicionar_membros', 'remover_membros', 'editar_grupo', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 1}), (g:Grupo {id: 'grp010'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-05-20'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+
+MATCH (u:Usuario {id: 12}), (g:Grupo {id: 'grp010'})
+MERGE (u)-[:ADMINISTRA {
+  desde: date('2022-09-10'),
+  cargo: 'moderador',
+  permissoes: ['aprovar_posts', 'deletar_posts']
+}]->(g);
+```
+
+### Passo 17: Os fundadores que criaram os grupos também administram
+```cypher
+// ========================================================
+// RELACIONAR CRIOU COM ADMINISTRA (FUNDADORES)
+// ========================================================
+
+MATCH (u:Usuario)-[:ADMINISTRA {cargo: 'fundador'}]->(g:Grupo)
+WHERE NOT (u)-[:CRIOU]->(g)
+MERGE (u)-[:CRIOU {data: date('2020-01-01')}]->(g);
+```
+
+### Passo 18: Verificação Final
 ```cypher
 // ========================================================
 // VERIFICAÇÃO FINAL - ESTATÍSTICAS DO GRAFO
