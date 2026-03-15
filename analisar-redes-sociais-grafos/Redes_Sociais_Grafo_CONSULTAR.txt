@@ -1,0 +1,244 @@
+// =============================================
+// 22. CONSULTAS E ESTATÍSTICAS
+// =============================================
+//
+// 22.1 Estatística geral
+MATCH (n) RETURN 'Nós' AS tipo, count(n) AS total
+UNION ALL
+MATCH ()-[r]->() RETURN 'Relacionamentos' AS tipo, count(r) AS total;
+
+// 22.2 Nós por tipo
+MATCH (u:Usuario) RETURN 'Usuários' AS tipo, count(u) AS total
+UNION ALL
+MATCH (p:Post) RETURN 'Posts' AS tipo, count(p) AS total
+UNION ALL
+MATCH (g:Grupo) RETURN 'Grupos' AS tipo, count(g) AS total
+UNION ALL
+MATCH (c:Categoria) RETURN 'Categorias' AS tipo, count(c) AS total
+UNION ALL
+MATCH (h:Hashtag) RETURN 'Hashtags' AS tipo, count(h) AS total
+UNION ALL
+MATCH (com:Comentario) RETURN 'Comentários' AS tipo, count(com) AS total;
+
+// 22.3 Usuários Mais Influentes (por seguidores)
+MATCH (u:Usuario)<-[:SEGUE]-(seguidor)
+RETURN u.nome, 
+       u.username, 
+       count(seguidor) AS totalSeguidores
+ORDER BY totalSeguidores DESC
+LIMIT 10;
+
+// 22.4 Posts Mais Populares
+MATCH (p:Post)<-[:CURTIU]-(usuario)
+MATCH (autor:Usuario)-[:POSTOU]->(p)
+RETURN autor.username,
+       p.conteudo,
+       count(usuario) AS totalCurtidas,
+       p.data
+ORDER BY totalCurtidas DESC
+LIMIT 10;
+
+// 22.5 Sugestões de Amizade (Amigos de Amigos)
+MATCH (eu:Usuario {username: 'ana_silva'})-[:AMIGO_DE]->(amigo)-[:AMIGO_DE]->(sugestao)
+WHERE NOT (eu)-[:AMIGO_DE]-(sugestao) AND eu <> sugestao
+RETURN sugestao.nome,
+       sugestao.username,
+       count(DISTINCT amigo) AS amigosEmComum
+ORDER BY amigosEmComum DESC
+LIMIT 5;
+
+// 22.6 Hashtags Mais Usadas
+MATCH (h:Hashtag)<-[:TEM_TAG]-(p:Post)
+RETURN h.nome AS hashtag,
+       count(p) AS totalPosts
+ORDER BY totalPosts DESC
+LIMIT 10;
+
+// 22.7 Usuários que Seguem Mas Não São Seguidos de Volta
+MATCH (u1:Usuario)-[:SEGUE]->(u2:Usuario)
+WHERE NOT (u2)-[:SEGUE]->(u1)
+RETURN u1.username AS seguidor,
+       u2.username AS seguido
+LIMIT 20;
+
+// 22.8 Comunidades por Cidade
+MATCH (u:Usuario)
+WITH u.cidade AS cidade, count(u) AS totalUsuarios
+RETURN cidade, totalUsuarios
+ORDER BY totalUsuarios DESC;
+
+// 22.9 Engajamento por Usuário
+MATCH (u:Usuario)
+OPTIONAL MATCH (u)-[:POSTOU]->(p:Post)
+OPTIONAL MATCH (p)<-[:CURTIU]-(curtidor)
+WITH u, 
+     count(DISTINCT p) AS totalPosts, 
+     count(curtidor) AS totalCurtidas
+RETURN u.username,
+       totalPosts,
+       totalCurtidas,
+       CASE WHEN totalPosts > 0 
+            THEN round(toFloat(totalCurtidas) / totalPosts, 2) 
+            ELSE 0 END AS mediaCurtidasPorPost
+ORDER BY mediaCurtidasPorPost DESC
+LIMIT 10;
+
+// 22.10 Grupos Mais Populares
+MATCH (g:Grupo)<-[:MEMBRO_DE]-(u:Usuario)
+MATCH (g)-[:PERTENCE_A]->(c:Categoria)
+RETURN g.nome AS grupo,
+       c.nome AS categoria,
+       g.privado AS privado,
+       count(u) AS totalMembros,
+       g.dataCriacao AS criacao
+ORDER BY totalMembros DESC;
+
+// 22.11 Usuários Mais Ativos em Grupos
+MATCH (u:Usuario)-[:MEMBRO_DE]->(g:Grupo)
+OPTIONAL MATCH (u)-[:POSTOU]->(p:Post)-[:PUBLICADO_EM]->(g)
+RETURN u.username AS usuario,
+       count(DISTINCT g) AS gruposParticipa,
+       count(p) AS postsEmGrupos
+ORDER BY postsEmGrupos DESC, gruposParticipa DESC
+LIMIT 10;
+
+// 22.12 Sugerir Grupos para Usuário
+MATCH (eu:Usuario {username: 'ana_silva'})
+MATCH (eu)-[:AMIGO_DE|SEGUE]->(amigo)-[:MEMBRO_DE]->(g:Grupo)
+MATCH (g)-[:PERTENCE_A_CATEGORIA]->(c:Categoria)
+WHERE NOT (eu)-[:MEMBRO_DE]->(g)
+RETURN g.nome AS grupo,
+       c.nome AS categoria,
+       g.descricao AS descricao,
+       count(DISTINCT amigo) AS amigosNoGrupo,
+       g.membrosCount AS totalMembros
+ORDER BY amigosNoGrupo DESC, totalMembros DESC
+LIMIT 5;
+
+// 22.13 Overlap entre Grupos (Membros em Comum)
+MATCH (g1:Grupo)<-[:MEMBRO_DE]-(u:Usuario)-[:MEMBRO_DE]->(g2:Grupo)
+WHERE g1.id < g2.id
+WITH g1, g2, count(DISTINCT u) AS membrosComum
+WHERE membrosComum > 2
+RETURN g1.nome AS grupo1,
+       g2.nome AS grupo2,
+       membrosComum
+ORDER BY membrosComum DESC
+LIMIT 10;
+
+// 22.14 Categorias em que o Usuário Participa
+MATCH (u:Usuario {username: 'ana_silva'})-[:MEMBRO_DE]->(g:Grupo)-[:PERTENCE_A_CATEGORIA]->(c:Categoria)
+RETURN c.nome AS categoria,
+       c.icone AS icone,
+       count(g) AS gruposNaCategoria,
+       collect(g.nome) AS grupos;
+
+// 22.15 Recomendação de Categoria Baseada em Amigos
+MATCH (eu:Usuario {username: 'ana_silva'})-[:AMIGO_DE]->(amigo)-[:MEMBRO_DE]->(g:Grupo)-[:PERTENCE_A_CATEGORIA]->(c:Categoria)
+WHERE NOT (eu)-[:MEMBRO_DE]->(:Grupo)-[:PERTENCE_A_CATEGORIA]->(c)
+RETURN c.nome AS categoria,
+       c.descricao AS descricao,
+       count(DISTINCT amigo) AS amigosInteressados,
+       count(DISTINCT g) AS gruposDisponiveis
+ORDER BY amigosInteressados DESC, gruposDisponiveis DESC
+LIMIT 5;
+
+// 22.16 Posts com Mais Comentários
+MATCH (autor:Usuario)-[:POSTOU]->(p:Post)
+MATCH (p)<-[:EM_POST]-(c:Comentario)
+RETURN autor.username AS autor,
+       p.conteudo AS post,
+       count(DISTINCT c) AS totalComentarios
+ORDER BY totalComentarios DESC
+LIMIT 10;
+
+// 22.17 Usuários Mais Ativos em Comentários
+MATCH (u:Usuario)-[:COMENTOU]->(c:Comentario)
+RETURN u.username AS usuario,
+       u.nome AS nome,
+       count(c) AS totalComentarios
+ORDER BY totalComentarios DESC
+LIMIT 10;
+
+// 22.18 Comentários Mais Curtidos
+MATCH (c:Comentario)<-[:CURTIU]-(u:Usuario)
+MATCH (autor:Usuario)-[:COMENTOU]->(c)
+MATCH (c)-[:EM_POST]->(p:Post)
+RETURN autor.username AS autor,
+       c.conteudo AS comentario,
+       count(u) AS curtidas,
+       p.conteudo AS postConteudo
+ORDER BY curtidas DESC
+LIMIT 10;
+
+// 22.19 Posts Sem Comentários (Baixo Engajamento)
+MATCH (p:Post)
+MATCH (autor:Usuario)-[:POSTOU]->(p)
+WHERE NOT (p)<-[:EM_POST]-(:Comentario)
+RETURN autor.username AS autor,
+       p.conteudo AS post,
+       p.curtidas AS curtidas,
+       p.data AS data
+ORDER BY p.curtidas DESC
+LIMIT 10;
+
+// 22.20 Análise de Sentimento Simulada (baseada em palavras-chave)
+MATCH (c:Comentario)
+MATCH (u:Usuario)-[:COMENTOU]->(c)
+WITH c, u,
+  CASE 
+    WHEN toLower(c.conteudo) CONTAINS 'incrível' OR 
+         toLower(c.conteudo) CONTAINS 'ótimo' OR 
+         toLower(c.conteudo) CONTAINS 'amei' OR
+         toLower(c.conteudo) CONTAINS 'maravilhoso' THEN 'Positivo'
+    WHEN toLower(c.conteudo) CONTAINS 'ruim' OR 
+         toLower(c.conteudo) CONTAINS 'horrível' THEN 'Negativo'
+    ELSE 'Neutro'
+  END AS sentimento
+RETURN sentimento,
+       count(c) AS totalComentarios,
+       collect(u.username)[..5] AS exemplosUsuarios
+ORDER BY totalComentarios DESC;
+
+// 22.21 Usuários que Administram Múltiplos Grupos
+MATCH (u:Usuario)-[:ADMINISTRA]->(g:Grupo)
+WITH u, count(g) AS totalGrupos, collect(g.nome) AS grupos
+WHERE totalGrupos > 1
+RETURN u.username AS usuario,
+       u.nome AS nome,
+       totalGrupos,
+       grupos
+ORDER BY totalGrupos DESC;
+
+// 22.22 Grupos Sem Moderadores (Apenas Fundador)
+MATCH (g:Grupo)
+OPTIONAL MATCH (g)<-[a:ADMINISTRA {cargo: 'moderador'}]-()
+WITH g, count(a) AS moderadores
+WHERE moderadores = 0
+MATCH (g)<-[admin:ADMINISTRA {cargo: 'fundador'}]-(fundador:Usuario)
+RETURN g.nome AS grupo,
+       fundador.username AS apenasFoundador,
+       'Precisa de moderadores' AS status;
+
+// 22.23 Atividade dos Administradores (Posts e Comentários)
+MATCH (u:Usuario)-[:ADMINISTRA]->(g:Grupo)
+OPTIONAL MATCH (u)-[:POSTOU]->(p:Post)-[:PUBLICADO_EM]->(g)
+OPTIONAL MATCH (u)-[:COMENTOU]->(c:Comentario)-[:EM_POST]->(:Post)-[:PUBLICADO_EM]->(g)
+RETURN u.username AS admin,
+       g.nome AS grupo,
+       count(DISTINCT p) AS postsNoGrupo,
+       count(DISTINCT c) AS comentariosNoGrupo,
+       (count(DISTINCT p) + count(DISTINCT c)) AS atividadeTotal
+ORDER BY atividadeTotal DESC;
+
+// 22.24 Estatísticas Gerais de Administração
+MATCH (g:Grupo)
+OPTIONAL MATCH (g)<-[a:ADMINISTRA]-(admin:Usuario)
+OPTIONAL MATCH (g)<-[:MEMBRO_DE]-(membro:Usuario)
+RETURN g.nome AS grupo,
+       count(DISTINCT admin) AS totalAdmins,
+       count(DISTINCT CASE WHEN a.cargo = 'fundador' THEN admin END) AS fundadores,
+       count(DISTINCT CASE WHEN a.cargo = 'moderador' THEN admin END) AS moderadores,
+       count(DISTINCT membro) AS totalMembros,
+       round(toFloat(count(DISTINCT admin)) / count(DISTINCT membro) * 100, 2) AS percentualAdmins
+ORDER BY g.nome;
