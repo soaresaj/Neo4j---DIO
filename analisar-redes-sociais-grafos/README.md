@@ -1204,11 +1204,12 @@ ORDER BY tipo;
 |------------|--------|
 | Amizades   | ~100   |
 | Categorias | 9      |
-| Curtidas   | ~400+  |
+| Curtidas   | ~400   |
 | Grupos     | 10     |
-| Hashtags   | ~50    |
-| Posts      | 100    |
-| Seguindo   | ~300+  |
+| Hashtags   | ~200   |
+| Posts      | ~100   |
+| Seguindo   | ~600   |
+| Comentários| ~100   |
 | Usuários   | 50     |
 
 **Imagem do Grafo no Neo4j:**
@@ -1251,13 +1252,15 @@ ORDER BY amigosEmComum DESC
 LIMIT 10;
 ```
 
-### 4. Graus de Separação (Caminho Mais Curto)
+### 4. Graus de Separação (Caminhos Mais Curto)
 ```cypher
-MATCH (inicio:Usuario {username: 'ana_silva'}), 
-      (fim:Usuario {username: 'zuleika_m'})
-MATCH p = shortestPath((inicio)-[:AMIGO_DE*]-(fim))
+MATCH (inicio:Usuario {username: 'ana_silva'})
+WITH inicio
+MATCH (fim:Usuario {username: 'bruno_costa'})
+MATCH p = allShortestPaths((inicio)-[:AMIGO_DE*..10]-(fim))
 RETURN [u IN nodes(p) | u.username] AS caminho,
-       length(p) AS grausSeparacao;
+       length(p) AS graus
+LIMIT 5;
 ```
 
 ### 5. Hashtags Mais Usadas
@@ -1280,20 +1283,8 @@ RETURN g.nome AS grupo,
 ORDER BY membros DESC;
 ```
 
-### 7. Engajamento por Usuário
-```cypher
-MATCH (u:Usuario)
-OPTIONAL MATCH (u)-[:POSTOU]->(p:Post)
-OPTIONAL MATCH (p)<-[:CURTIU]-(curtidor)
-RETURN u.username AS usuario,
-       count(DISTINCT p) AS posts,
-       count(curtidor) AS curtidas,
-       CASE WHEN count(p) > 0 
-            THEN toFloat(count(curtidor)) / count(p) 
-            ELSE 0 END AS mediaCurtidasPorPost
-ORDER BY mediaCurtidasPorPost DESC
-LIMIT 15;
-```
+### 7. Outras Consultas
+[**Analisar Grafo**](Analisar_Grafo_Consultas.txt)
 
 ---
 
