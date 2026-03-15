@@ -1211,6 +1211,9 @@ ORDER BY tipo;
 | Seguindo   | ~300+  |
 | Usuários   | 50     |
 
+**Imagem do Grafo no Neo4j:**
+
+![Grafo de Redes Sociais no Neo4j](Neo4j_visualisation.png)
 ---
 
 ## 🔍 Consultas de Exemplo
