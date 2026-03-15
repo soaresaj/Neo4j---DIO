@@ -168,30 +168,21 @@ Este desafio reforça um princípio central do Neo4j: **o poder do grafo está n
 
 **RELACIONAMENTOS (Relationships):**
 ```cypher
-(:Usuario)-[:SEGUE]->(:Usuario)
-(:Usuario)-[:AMIGO_DE]->(:Usuario)
-(:Usuario)-[:POSTOU]->(:Post)
-(:Usuario)-[:CURTIU]->(:Post)
-(:Usuario)-[:COMENTOU]->(:Comentario)
-(:Usuario)-[:MEMBRO_DE]->(:Grupo)
-(:Usuario)-[:CRIOU]->(:Grupo)
-(:Usuario)-[:ADMINISTRA]->(:Grupo)
-(:Comentario)-[:EM_POST]->(:Post)
-(:Post)-[:TEM_TAG]->(:Hashtag)
-(:Post)-[:PUBLICADO_EM]->(:Grupo)
-(:Grupo)-[:PERTENCE_A_CATEGORIA]->(:Categoria)
-(:Usuario)-[:PERTENCE_A_COMUNIDADE]->(:Comunidade)
-```
-
-**MODELO NO ARROWS.APP:**
-
-![Modelo Grafo Redes Sociais](redes_sociais.png)
-
-[**Link para o grafo no Arrows**](https://arrows.app/#/local/id=y2lZ_CkdSdmnt4b5Euzm)
-
-***Código Cypher gerado no Arrows:***
-```cypher
-CREATE (Post:p {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:EM_POST]-(n8:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:COMENTOU]-(n5:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo:g {id: "string", nome: "string", descricao: "string", privado: "boolean", dataCriacao: "datetime", caption: "string", membrosCount: "integer"})<-[:PUBLICADO_EM {data: "datetime"}]-(Post)<-[:CURTIU {data: "datetime"}]-(n0:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:SEGUE {``: ""}]->(n5)<-[:AMIGO_DE {desde: "datetime"}]-(n0)-[:POSTOU]->(Post)-[:TEM_TAG {nome: "string"}]->(:h {nome: "string"}),(n8)<-[:CURTIU {data: "datetime"}]-(n5)-[:CURTIU {data: "datetime"}]->(Post)<-[:POSTOU]-(n5)-[:CRIOU {data: "datetime"}]->(Grupo)-[:PERTENCE_A_CATEGORIA]->(:c {nome: "string", descricao: "string", icone: "imagem", caption: "imagem", cor: "string"}),(n0)-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo)<-[:CRIOU {data: "datetime"}]-(n0)-[:COMENTOU]->(n6:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:CURTIU {data: "datetime"}]-(n0),(n6)-[:EM_POST]->(Post)
+├── (:Usuario)-[:SEGUE]->(:Usuario)
+├── (:Usuario)-[:AMIGO_DE]->(:Usuario)
+├── (:Usuario)-[:POSTOU]->(:Post)
+├── (:Usuario)-[:CURTIU]->(:Post)
+├── (:Usuario)-[:CURTIU]->(:Comentario)
+├── (:Usuario)-[:COMENTOU]->(:Comentario)
+├── (:Usuario)-[:MEMBRO_DE]->(:Grupo)
+├── (:Usuario)-[:CRIOU]->(:Grupo)
+├── (:Usuario)-[:ADMINISTRA]->(:Grupo)
+├── (:Comentario)-[:EM_POST]->(:Post)
+├── (:Comentario)-[:RESPONDE_A]->(:Comentario)
+├── (:Post)-[:TEM_TAG]->(:Hashtag)
+├── (:Post)-[:PUBLICADO_EM]->(:Grupo)
+├── (:Grupo)-[:PERTENCE_A_CATEGORIA]->(:Categoria)
+└── (:Usuario)-[:PERTENCE_A_COMUNIDADE]->(:Comunidade)
 ```
 
 ### Estatísticas do Dataset
@@ -207,6 +198,19 @@ CREATE (Post:p {id: "integer", conteudo: "string", curtidas: "integer", data: "d
 | [Comentários](comentarios.csv)      | ~100       |
 | Grupos        | 10         |
 | Categorias    | 9          |
+
+---
+
+## 🎯 Modelo no Arrows.app
+
+![Modelo Grafo Redes Sociais](redes_sociais.png)
+
+[**Link para o grafo no Arrows**](https://arrows.app/#/local/id=y2lZ_CkdSdmnt4b5Euzm)
+
+***Código Cypher gerado no Arrows:***
+```cypher
+CREATE (Post:p {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:EM_POST]-(n8:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:COMENTOU]-(n5:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo:g {id: "string", nome: "string", descricao: "string", privado: "boolean", dataCriacao: "datetime", caption: "string", membrosCount: "integer"})<-[:PUBLICADO_EM {data: "datetime"}]-(Post)<-[:CURTIU {data: "datetime"}]-(n0:u {id: "integer", nome: "string", username: "string", idade: "integer", cidade: "string", seguidoresCount: "integer"})-[:SEGUE {``: ""}]->(n5)<-[:AMIGO_DE {desde: "datetime"}]-(n0)-[:POSTOU]->(Post)-[:TEM_TAG {nome: "string"}]->(:h {nome: "string"}),(n8)<-[:CURTIU {data: "datetime"}]-(n5)-[:CURTIU {data: "datetime"}]->(Post)<-[:POSTOU]-(n5)-[:CRIOU {data: "datetime"}]->(Grupo)-[:PERTENCE_A_CATEGORIA]->(:c {nome: "string", descricao: "string", icone: "imagem", caption: "imagem", cor: "string"}),(n0)-[:MEMBRO_DE {cargo: "string", desde: "datetime"}]->(Grupo)<-[:CRIOU {data: "datetime"}]-(n0)-[:COMENTOU]->(n6:com {id: "integer", conteudo: "string", curtidas: "integer", data: "datetime"})<-[:CURTIU {data: "datetime"}]-(n0),(n6)-[:EM_POST]->(Post)
+```
 
 ---
 
